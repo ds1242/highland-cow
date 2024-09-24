@@ -1,23 +1,18 @@
 package auth
 
 import (
-	"errors"
-	"net/http"
 	"strings"
+	"errors"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
-var ErrNoAuthHeaderIncluded = errors.New("no authorization header included")
 
-func GetAPIKey(headers http.Header) (string, error) {
-	authHeader := headers.Get("Authorization")
-	if authHeader == "" {
-		return "", ErrNoAuthHeaderIncluded
-	}
 
-	splitAuth := strings.Split(authHeader, " ")
-	if len(splitAuth) < 2 || splitAuth[0] != "Apikey" {
+func VerifyToken(authString string) (string, error) {
+	
+	splitAuth := strings.Split(authString, " ")
+	if len(splitAuth) < 2 || splitAuth[0] != "Bearer" {
 		return "", errors.New("malformed authorization header")
 	}
 

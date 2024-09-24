@@ -1,28 +1,31 @@
 package main
 
-// import (
-// 	"net/http"
+import (
+	"context"
+	"net/http"
 
-// 	"github.com/ds1242/highland-cow/auth"
-// 	"github.com/ds1242/highland-cow/internal/database"
-// )
+	"github.com/ds1242/highland-cow/internal/auth"
+)
 
-// COMMENT THIS OUT FOR NOW
-// type authHandler func(http.ResponseWriter, *http.Request, database.User)
+var ErrNoAuthHeaderIncluded = "no authorization header included"
 
-// func (cfg *apiConfig) middlewareAuth(handler authHandler) http.HandlerFunc {
-// 	return func(w http.ResponseWriter, r *http.Request) {
-// 		apiKey, err := auth.GetAPIKey(r.Header)
-// 		if err != nil {
-// 			RespondWithError(w, http.StatusUnauthorized, "could not find api key")
-// 			return
-// 		}
 
-// 		user, err := cfg.DB.GetUserByAPIKey(r.Context(), apiKey)
-// 		if err != nil {
-// 			RespondWithError(w, http.StatusNotFound, "could not get user")
-// 			return
-// 		}
-// 		handler(w, r, user)
-// 	}
-// }
+func (cfg *apiConfig) middlewareAuth(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		tokenString := r.Header.Get("Authorization")
+		if tokenString == "" {
+			RespondWithError(w, http.StatusBadRequest, ErrNoAuthHeaderIncluded)
+			return
+		}
+
+		token, err := auth.VerifyToken(tokenString)
+		if err != nil {
+			RespondWithError(w, http.StatusUnauthorized, "unauthorized")
+			return
+		}
+
+		ctx := context.WithValue(r.Context(), "token", token)
+		next.ServeHTTP(w, r.WithContext(ctx))
+
+	}
+}
