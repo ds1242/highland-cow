@@ -36,12 +36,16 @@ func main() {
 
 	dbQueries := database.New(db)
 
+	cfg := &apiConfig{
+		DB: dbQueries,
+	}
+
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("GET /v1/healthz", healthzHandler)
 	mux.HandleFunc("GET /v1/err", errorHealthHandler)
 
-	mux.HandleFunc("GET /v1/users", handlerUsersCreate)
+	mux.HandleFunc("POST /v1/users", cfg.handlerUsersCreate)
 
 	srv := &http.Server{
 		Addr:    ":" + port,
