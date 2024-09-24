@@ -13,7 +13,7 @@ type User struct {
 	UpdatedAt time.Time `json:"updated_at"`
 	Name      string    `json:"name"`
 	Email     string    `json:"email"`
-	Password  string    `json:"password,omitempty"`
+	Password  string    `json:"-"`
 }
 
 func databaseUserToUser(user database.User) User {
