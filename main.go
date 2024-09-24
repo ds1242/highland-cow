@@ -17,8 +17,17 @@ func main() {
 		log.Fatal("PORT environment variable is not set")
 	}
 
+	dbURL := os.Getenv("CONNECTION_STRING")
+	if dbURL == "" {
+		log.Fatal("no db connection environment variable set")
+	}
+
 	mux := http.NewServeMux()
 
+	mux.HandleFunc("GET /v1/healthz", healthzHandler)
+	mux.HandleFunc("GET /v1/err", errorHealthHandler)
+
+	 	
 	srv := &http.Server{
 		Addr:    ":" + port,
 		Handler: mux,
