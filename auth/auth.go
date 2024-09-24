@@ -21,3 +21,11 @@ func GetAPIKey(headers http.Header) (string, error) {
 
 	return splitAuth[1], nil
 }
+
+func HashPassword(password string) (string, error) {
+
+}
+
+func CheckPasswordHash(password, hash string) error {
+	
+}
