@@ -9,5 +9,5 @@ func healthzHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func errorHealthHandler(w http.ResponseWriter, r *http.Request) {
-	RespondWithJSON(w, http.StatusInternalServerError, "Interval Server Error")
+	RespondWithJSON(w, http.StatusInternalServerError, map[string]string{"error": "Interal Server Error"})
 }
