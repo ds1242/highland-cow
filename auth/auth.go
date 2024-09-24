@@ -4,6 +4,8 @@ import (
 	"errors"
 	"net/http"
 	"strings"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 var ErrNoAuthHeaderIncluded = errors.New("no authorization header included")
@@ -23,9 +25,13 @@ func GetAPIKey(headers http.Header) (string, error) {
 }
 
 func HashPassword(password string) (string, error) {
-
+	passHash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return "", err
+	}
+	return string(passHash), nil
 }
 
-func CheckPasswordHash(password, hash string) error {
-	
-}
+// func CheckPasswordHash(password, hash string) error {
+
+// }
