@@ -36,3 +36,8 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 	}
 	RespondWithJSON(w, http.StatusCreated, databaseUserToUser(newUser))
 }
+
+
+func (cfg *apiConfig) handlerGetUser(w http.ResponseWriter, r *http.Request){
+	
+}
