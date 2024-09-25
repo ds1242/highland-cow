@@ -8,6 +8,7 @@ import (
 	"github.com/ds1242/highland-cow/internal/auth"
 	"github.com/ds1242/highland-cow/internal/database"
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request) {
@@ -48,9 +49,32 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 	RespondWithJSON(w, http.StatusCreated, databaseUserToUser(newUser))
 }
 
-func (cfg *apiConfig) handlerGetUser(w http.ResponseWriter, r *http.Request, user database.User) {
+func (cfg *apiConfig) handlerUserLogin(w http.ResponseWriter, r *http.Request) {
 	type Params struct {
 		Email    string `json:"email"`
 		Password string `json:"password"`
+	}
+
+	decoder := json.NewDecoder(r.Body)
+	params := Params{}
+
+	err := decoder.Decode(&params)
+	if err != nil {
+		RespondWithError(w, http.StatusBadRequest, "could not decode parameters")
+		return
+	}
+	
+	ctx := r.Context()
+
+	user, err := cfg.DB.GetUserByEmail(ctx, params.Email)
+	if err != nil {
+		RespondWithError(w, http.StatusBadRequest, "user not found")
+		return
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(params.Password))
+	if err != nil {
+		RespondWithError(w, http.StatusForbidden, "unable to login")
+		return
 	}
 }
