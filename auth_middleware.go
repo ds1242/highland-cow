@@ -9,7 +9,6 @@ import (
 
 var ErrNoAuthHeaderIncluded = "no authorization header included"
 
-
 func (cfg *apiConfig) middlewareAuth(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		tokenString := r.Header.Get("Authorization")
