@@ -77,4 +77,7 @@ func (cfg *apiConfig) handlerUserLogin(w http.ResponseWriter, r *http.Request) {
 		RespondWithError(w, http.StatusForbidden, "unable to login")
 		return
 	}
+
+	// Need to respond with a JSON of the user info 
+	// Need to generate the JWT and return that
 }
