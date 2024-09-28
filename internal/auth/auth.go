@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	"golang.org/x/crypto/bcrypt"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 
@@ -12,7 +13,7 @@ import (
 func VerifyToken(authString string) (string, error) {
 	
 	splitAuth := strings.Split(authString, " ")
-	if len(splitAuth) < 2 || splitAuth[0] != "Bearer" {
+	if len(splitAuth) < 2 || splitAuth[0] != "Bearer " {
 		return "", errors.New("malformed authorization header")
 	}
 

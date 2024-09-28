@@ -8,7 +8,6 @@ import (
 	"github.com/ds1242/highland-cow/internal/auth"
 	"github.com/ds1242/highland-cow/internal/database"
 	"github.com/google/uuid"
-	
 )
 
 func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request) {
@@ -63,7 +62,7 @@ func (cfg *apiConfig) handlerUserLogin(w http.ResponseWriter, r *http.Request) {
 		RespondWithError(w, http.StatusBadRequest, "could not decode parameters")
 		return
 	}
-	
+
 	ctx := r.Context()
 
 	user, err := cfg.DB.GetUserByEmail(ctx, params.Email)
@@ -72,12 +71,12 @@ func (cfg *apiConfig) handlerUserLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = auth.CheckPasswordHash(params.Password, user.Password)
-	if err != nil {
+	passErr := auth.CheckPasswordHash(params.Password, user.Password)
+	if passErr != nil {
 		RespondWithError(w, http.StatusForbidden, "unable to login")
 		return
 	}
 
-	// Need to respond with a JSON of the user info 
+	// Need to respond with a JSON of the user info
 	// Need to generate the JWT and return that
 }

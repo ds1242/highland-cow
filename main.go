@@ -13,12 +13,14 @@ import (
 )
 
 type apiConfig struct {
-	DB *database.Queries
+	DB        *database.Queries
+	JWTSecret string
 }
 
 func main() {
 	godotenv.Load()
 
+	jwtSecret := os.Getenv("JWT_SECRET")
 	port := os.Getenv("PORT")
 	if port == "" {
 		log.Fatal("PORT environment variable is not set")
@@ -38,6 +40,7 @@ func main() {
 
 	cfg := &apiConfig{
 		DB: dbQueries,
+		JWTSecret: jwtSecret,
 	}
 
 	mux := http.NewServeMux()
