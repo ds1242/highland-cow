@@ -8,7 +8,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
-	"github.com/golang-jwt/jwt/v5"
+	
 	"github.com/ds1242/highland-cow/internal/auth"
 	"github.com/ds1242/highland-cow/internal/database"
 )
@@ -30,32 +30,13 @@ func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request) 
 	}
 
 	authHeader := r.Header.Get("Authorization")
-	if !strings.HasPrefix(authHeader, "Bearer ") {
-		RespondWithError(w, http.StatusUnauthorized, "not authorized")
-		return
-	}
-
 	// trim out Bearer from token
 	tokenString := strings.TrimPrefix(authHeader, "Bearer ")
-	claims := auth.UserClaim{}
-
-	// parse with claims
-	token, err := jwt.ParseWithClaims(tokenString, &claims, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
-		}
-		return []byte(cfg.JWTSecret), nil
-	})
-
+	
+	claims, err := CheckToken(tokenString, cfg)
 	if err != nil {
-		fmt.Printf("Error parsing token: %v", err)
-		RespondWithError(w, http.StatusUnauthorized, "not authorized")
-		return
-	}
-
-	if !token.Valid {
-		RespondWithError(w, http.StatusUnauthorized, "invalid token")
-		return
+		fmt.Printf("Authorization error: %v", err)
+		RespondWithError(w, http.StatusUnauthorized, err.Error())
 	}
 
 	userID, err := uuid.Parse(claims.Subject)
@@ -116,3 +97,4 @@ func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request) 
 	RespondWithJSON(w, http.StatusOK, userResponse)
 
 }
+
