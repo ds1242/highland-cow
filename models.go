@@ -37,6 +37,7 @@ type UserResponse struct {
 func createUserResponse(user User, token string) UserResponse {
 	return UserResponse{
 		ID:    user.ID,
+		Name:  user.Name,
 		Email: user.Email,
 		Token: token,
 	}

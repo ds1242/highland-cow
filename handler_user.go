@@ -151,9 +151,9 @@ func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request) 
 	}
 
 	if !token.Valid {
-		RespondWithError(w, http.StatusUnauthorized, err.Error())
+		RespondWithError(w, http.StatusUnauthorized, "invalid token")
 		return
 	}
 
-	fmt.Println(token)
+	fmt.Println(claims.Subject)
 }
