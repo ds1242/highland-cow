@@ -10,6 +10,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// handler to Create New Users
 func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request) {
 	type Params struct {
 		Name     string `json:"name"`
@@ -41,7 +42,7 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 		Password:  passHash,
 	})
 	if err != nil {
-		RespondWithError(w, http.StatusInternalServerError, "Couldn't create users")
+		RespondWithError(w, http.StatusInternalServerError, err.Error())
 	}
 	// create token
 	defaultTokenExpiration := 60 * 60
@@ -56,6 +57,7 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 	RespondWithJSON(w, http.StatusCreated, userResponse)
 }
 
+// Handler for User Login
 func (cfg *apiConfig) handlerUserLogin(w http.ResponseWriter, r *http.Request) {
 	type Params struct {
 		Email    string `json:"email"`
