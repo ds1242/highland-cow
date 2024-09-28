@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/ds1242/highland-cow/internal/auth"
@@ -119,6 +120,13 @@ func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request) 
 
 	err := decoder.Decode(&params)
 	if err != nil {
+		RespondWithError(w, http.StatusBadRequest, "invalid request payload")
+		return
+	}
 
+	authHeader := r.Header.Get("Authorization")
+	if !strings.HasPrefix(authHeader, "Bearer ") {
+		RespondWithError(w, http.StatusUnauthorized, "not authorized")
+		return
 	}
 }
