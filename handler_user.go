@@ -112,9 +112,9 @@ func (cfg *apiConfig) handlerUserLogin(w http.ResponseWriter, r *http.Request) {
 
 func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request) {
 	type Params struct {
-		Name     *string `json:"name,omitempty"`
-		Email    *string `json:"email,omitempty"`
-		Password *string `json:"password,omitempty"`
+		Name     string `json:"name,omitempty"`
+		Email    string `json:"email,omitempty"`
+		Password string `json:"password,omitempty"`
 	}
 
 	decoder := json.NewDecoder(r.Body)
@@ -155,28 +155,53 @@ func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	var hashedPass *string
-
-	if params.Password != nil {
-		hashed, err := auth.HashPassword(*params.Password)
-		if err != nil {
-			RespondWithError(w, http.StatusBadRequest, "error parsing")
-			return
-		}
-		hashedPass = &hashed
-	}
-
 	userID, err := uuid.Parse(claims.Subject)
 	if err != nil {
 		RespondWithError(w, http.StatusBadRequest, "unable to parse subject")
 		return
 	}
 
+	ctx := r.Context()
+
+	userToUpdate, err := cfg.DB.GetUserByID(ctx, userID)
+	if err != nil{
+		RespondWithJSON(w, http.StatusBadRequest, "error finding that user")
+	}
+
+	var hashedPass string
+	var emailToUpdate string
+	var nameToUpdate string
+
+	if params.Password != "" {
+		hashed, err := auth.HashPassword(params.Password)
+		if err != nil {
+			RespondWithError(w, http.StatusBadRequest, "error parsing")
+			return
+		}
+		hashedPass = hashed
+	} else {
+		hashedPass = userToUpdate.Password
+	}
+
+	if params.Email == "" {
+		emailToUpdate = userToUpdate.Email
+	} else {
+		emailToUpdate = params.Email
+	}
+	if params.Name == "" {
+		nameToUpdate = userToUpdate.Email
+	} else {
+		nameToUpdate = params.Name
+	}
+
+
 	
-	updatedDBUser, err := cfg.DB.UpdateUserByID(r.Context(), database.UpdateUserByIDParams{
-		Name:     *params.Name,
-		Email:    *params.Email,
-		Password: *hashedPass,
+
+	
+	updatedDBUser, err := cfg.DB.UpdateUserByID(ctx, database.UpdateUserByIDParams{
+		Name:     nameToUpdate,
+		Email:    emailToUpdate,
+		Password: hashedPass,
 		UpdatedAt: time.Now().UTC(),
 		ID:       userID,
 	})
@@ -191,5 +216,5 @@ func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request) 
 	// send updated response
 	RespondWithJSON(w, http.StatusOK, userResponse)
 
-
 }
+
