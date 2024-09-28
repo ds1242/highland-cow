@@ -29,6 +29,7 @@ func databaseUserToUser(user database.User) User {
 
 type UserResponse struct {
 	ID    uuid.UUID `json:"user_id"`
+	Name  string    `json:"name"`
 	Email string    `json:"email"`
 	Token string    `json:"token"`
 }
