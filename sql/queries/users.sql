@@ -22,3 +22,7 @@ SET
     updated_at = $4
 WHERE id = $5
 RETURNING *;
+
+-- name: DeleteUserByID :exec
+DELETE FROM users
+WHERE id = $1;
