@@ -47,7 +47,7 @@ func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request, 
 		emailToUpdate = params.Email
 	}
 	if params.Name == "" {
-		nameToUpdate = userToUpdate.Email
+		nameToUpdate = userToUpdate.Name
 	} else {
 		nameToUpdate = params.Name
 	}
