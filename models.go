@@ -42,3 +42,10 @@ func createUserResponse(user User, token string) UserResponse {
 		Token: token,
 	}
 }
+
+// type UpdateUserByIDParams struct {
+// 	Name     string
+// 	Email    string
+// 	Password string
+// 	ID       uuid.UUID
+// }

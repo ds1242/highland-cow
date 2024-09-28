@@ -12,3 +12,13 @@ WHERE email = $1;
 SELECT *
 FROM users
 WHERE id = $1;
+
+-- name: UpdateUserByID :one
+UPDATE users
+SET
+    name = COALESCE($1, name),
+    email = COALESCE($2, email),
+    password = COALESCE($3, password),
+    updated_at = $4
+WHERE id = $5
+RETURNING *;

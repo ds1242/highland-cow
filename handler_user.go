@@ -112,9 +112,9 @@ func (cfg *apiConfig) handlerUserLogin(w http.ResponseWriter, r *http.Request) {
 
 func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request) {
 	type Params struct {
-		Name     string `json:"name,omitempty"`
-		Email    string `json:"email,omitempty"`
-		Password string `json:"password,omitempty"`
+		Name     *string `json:"name,omitempty"`
+		Email    *string `json:"email,omitempty"`
+		Password *string `json:"password,omitempty"`
 	}
 
 	decoder := json.NewDecoder(r.Body)
@@ -155,5 +155,41 @@ func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	fmt.Println(claims.Subject)
+	var hashedPass *string
+
+	if params.Password != nil {
+		hashed, err := auth.HashPassword(*params.Password)
+		if err != nil {
+			RespondWithError(w, http.StatusBadRequest, "error parsing")
+			return
+		}
+		hashedPass = &hashed
+	}
+
+	userID, err := uuid.Parse(claims.Subject)
+	if err != nil {
+		RespondWithError(w, http.StatusBadRequest, "unable to parse subject")
+		return
+	}
+
+	
+	updatedDBUser, err := cfg.DB.UpdateUserByID(r.Context(), database.UpdateUserByIDParams{
+		Name:     *params.Name,
+		Email:    *params.Email,
+		Password: *hashedPass,
+		UpdatedAt: time.Now().UTC(),
+		ID:       userID,
+	})
+	if err != nil {
+		RespondWithError(w, http.StatusBadRequest, "unable to update user")
+		return
+	}
+	// convert from dbUser struct to handler User struct
+	updatedUser := databaseUserToUser(updatedDBUser)
+	// create user response
+	userResponse := createUserResponse(updatedUser, tokenString)
+	// send updated response
+	RespondWithJSON(w, http.StatusOK, userResponse)
+
+
 }
