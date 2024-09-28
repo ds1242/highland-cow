@@ -8,7 +8,7 @@ import (
 	"github.com/ds1242/highland-cow/internal/auth"
 	"github.com/ds1242/highland-cow/internal/database"
 	"github.com/google/uuid"
-	"golang.org/x/crypto/bcrypt"
+	
 )
 
 func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request) {
@@ -72,7 +72,7 @@ func (cfg *apiConfig) handlerUserLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(params.Password))
+	err = auth.CheckPasswordHash(params.Password, user.Password)
 	if err != nil {
 		RespondWithError(w, http.StatusForbidden, "unable to login")
 		return
