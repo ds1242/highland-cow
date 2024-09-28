@@ -35,7 +35,7 @@ func (cfg *apiConfig) middlewareAuth(handler authedHandler) http.HandlerFunc {
 
 		userID, err := uuid.Parse(token.Subject)
 		if err != nil {
-			RespondWithError(w, http.StatusBadRequest, "unable to parse subject")
+			RespondWithError(w, http.StatusBadRequest, "unable to parse UUID")
 			return
 		}
 
