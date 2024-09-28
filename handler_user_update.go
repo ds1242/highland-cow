@@ -2,18 +2,14 @@ package main
 
 import (
 	"net/http"
-	"strings"
 	"encoding/json"
 	"time"
-	"fmt"
-
-	"github.com/google/uuid"
 	
 	"github.com/ds1242/highland-cow/internal/auth"
 	"github.com/ds1242/highland-cow/internal/database"
 )
 
-func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request) {
+func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request, userToUpdate User) {
 	type Params struct {
 		Name     string `json:"name,omitempty"`
 		Email    string `json:"email,omitempty"`
@@ -29,28 +25,6 @@ func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	authHeader := r.Header.Get("Authorization")
-	// trim out Bearer from token
-	tokenString := strings.TrimPrefix(authHeader, "Bearer ")
-	
-	claims, err := CheckToken(tokenString, cfg)
-	if err != nil {
-		fmt.Printf("Authorization error: %v", err)
-		RespondWithError(w, http.StatusUnauthorized, err.Error())
-	}
-
-	userID, err := uuid.Parse(claims.Subject)
-	if err != nil {
-		RespondWithError(w, http.StatusBadRequest, "unable to parse subject")
-		return
-	}
-
-	ctx := r.Context()
-
-	userToUpdate, err := cfg.DB.GetUserByID(ctx, userID)
-	if err != nil{
-		RespondWithJSON(w, http.StatusBadRequest, "error finding that user")
-	}
 
 	var hashedPass string
 	var emailToUpdate string
@@ -78,12 +52,14 @@ func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request) 
 		nameToUpdate = params.Name
 	}
 
+	ctx := r.Context()
+
 	updatedDBUser, err := cfg.DB.UpdateUserByID(ctx, database.UpdateUserByIDParams{
 		Name:     nameToUpdate,
 		Email:    emailToUpdate,
 		Password: hashedPass,
 		UpdatedAt: time.Now().UTC(),
-		ID:       userID,
+		ID:       userToUpdate.ID,
 	})
 	if err != nil {
 		RespondWithError(w, http.StatusBadRequest, "unable to update user")
@@ -92,7 +68,7 @@ func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request) 
 	// convert from dbUser struct to handler User struct
 	updatedUser := databaseUserToUser(updatedDBUser)
 	// create user response
-	userResponse := createUserResponse(updatedUser, tokenString)
+	userResponse := updatedUserResponse(updatedUser)
 	// send updated response
 	RespondWithJSON(w, http.StatusOK, userResponse)
 

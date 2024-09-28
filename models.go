@@ -43,6 +43,13 @@ func createUserResponse(user User, token string) UserResponse {
 	}
 }
 
+func updatedUserResponse(user User) UserResponse {
+	return UserResponse{
+		ID:    user.ID,
+		Name:  user.Name,
+		Email: user.Email,
+	}
+}
 // type UpdateUserByIDParams struct {
 // 	Name     string
 // 	Email    string

@@ -50,7 +50,7 @@ func main() {
 
 	mux.HandleFunc("POST /v1/users", cfg.handlerUsersCreate)
 	mux.HandleFunc("GET /v1/users", cfg.handlerUserLogin)
-	mux.HandleFunc("PUT /v1/users", cfg.handlerUserUpdate)
+	mux.HandleFunc("PUT /v1/users", cfg.middlewareAuth(cfg.handlerUserUpdate))
 
 	srv := &http.Server{
 		Addr:    ":" + port,
