@@ -26,3 +26,17 @@ func databaseUserToUser(user database.User) User {
 		Password:  user.Password,
 	}
 }
+
+type UserResponse struct {
+	ID    uuid.UUID `json:"user_id"`
+	Email string    `json:"email"`
+	Token string    `json:"token"`
+}
+
+func createUserResponse(user User, token string) UserResponse {
+	return UserResponse{
+		ID:    user.ID,
+		Email: user.Email,
+		Token: token,
+	}
+}

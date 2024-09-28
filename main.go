@@ -39,7 +39,7 @@ func main() {
 	dbQueries := database.New(db)
 
 	cfg := &apiConfig{
-		DB: dbQueries,
+		DB:        dbQueries,
 		JWTSecret: jwtSecret,
 	}
 

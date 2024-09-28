@@ -23,7 +23,6 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 	err := decoder.Decode(&params)
 	if err != nil {
 		RespondWithError(w, http.StatusBadRequest, "Couldn't decode parameters")
-		return
 	}
 
 	ctx := r.Context()
@@ -43,9 +42,18 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 	})
 	if err != nil {
 		RespondWithError(w, http.StatusInternalServerError, "Couldn't create users")
-		return
 	}
-	RespondWithJSON(w, http.StatusCreated, databaseUserToUser(newUser))
+	// create token
+	defaultTokenExpiration := 60 * 60
+
+	token, err := auth.CreateToken(newUser.ID.String(), defaultTokenExpiration, cfg.JWTSecret)
+	if err != nil {
+		RespondWithError(w, http.StatusUnauthorized, err.Error())
+	}
+	convertedUser := databaseUserToUser(newUser)
+	userResponse := createUserResponse(convertedUser, token)
+
+	RespondWithJSON(w, http.StatusCreated, userResponse)
 }
 
 func (cfg *apiConfig) handlerUserLogin(w http.ResponseWriter, r *http.Request) {
@@ -62,7 +70,6 @@ func (cfg *apiConfig) handlerUserLogin(w http.ResponseWriter, r *http.Request) {
 	err := decoder.Decode(&params)
 	if err != nil {
 		RespondWithError(w, http.StatusBadRequest, "could not decode parameters")
-		return
 	}
 
 	ctx := r.Context()
@@ -70,17 +77,22 @@ func (cfg *apiConfig) handlerUserLogin(w http.ResponseWriter, r *http.Request) {
 	user, err := cfg.DB.GetUserByEmail(ctx, params.Email)
 	if err != nil {
 		RespondWithError(w, http.StatusBadRequest, "user not found")
-		return
 	}
 
 	passErr := auth.CheckPasswordHash(params.Password, user.Password)
 	if passErr != nil {
 		RespondWithError(w, http.StatusForbidden, "unable to login")
-		return
 	}
 
-
 	token, err := auth.CreateToken(user.ID.String(), defaultTokenExpiration, cfg.JWTSecret)
-	// Need to respond with a JSON of the user info
-	// Need to generate the JWT and return that
+	if err != nil {
+		RespondWithError(w, http.StatusUnauthorized, err.Error())
+	}
+
+	// convert queried DB user to a struct user
+	convertedUser := databaseUserToUser(user)
+	// create userResponse to display information
+	userResponse := createUserResponse(convertedUser, token)
+	// Response
+	RespondWithJSON(w, http.StatusOK, userResponse)
 }
