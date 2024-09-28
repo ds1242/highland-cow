@@ -54,6 +54,8 @@ func (cfg *apiConfig) handlerUserLogin(w http.ResponseWriter, r *http.Request) {
 		Password string `json:"password"`
 	}
 
+	defaultTokenExpiration := 60 * 60
+
 	decoder := json.NewDecoder(r.Body)
 	params := Params{}
 
@@ -77,6 +79,8 @@ func (cfg *apiConfig) handlerUserLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+
+	token, err := auth.CreateToken(user.ID.String(), defaultTokenExpiration, cfg.JWTSecret)
 	// Need to respond with a JSON of the user info
 	// Need to generate the JWT and return that
 }
