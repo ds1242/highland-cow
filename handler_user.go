@@ -24,6 +24,7 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 	err := decoder.Decode(&params)
 	if err != nil {
 		RespondWithError(w, http.StatusBadRequest, "Couldn't decode parameters")
+		return
 	}
 
 	ctx := r.Context()
@@ -31,6 +32,7 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 	passHash, err := auth.HashPassword(params.Password)
 	if err != nil {
 		RespondWithError(w, http.StatusBadRequest, "could not decode parameters")
+		return
 	}
 
 	newUser, err := cfg.DB.CreateUser(ctx, database.CreateUserParams{
@@ -43,6 +45,7 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 	})
 	if err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err.Error())
+		return
 	}
 	// create token
 	defaultTokenExpiration := 60 * 60
@@ -50,6 +53,7 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 	token, err := auth.CreateToken(newUser.ID.String(), defaultTokenExpiration, cfg.JWTSecret)
 	if err != nil {
 		RespondWithError(w, http.StatusUnauthorized, err.Error())
+		return
 	}
 	convertedUser := databaseUserToUser(newUser)
 	userResponse := createUserResponse(convertedUser, token)
