@@ -1,0 +1,2 @@
+# Highland Cow
+Currently just the backend of what I hope to build into a web and native app that allows users to scan barcodes and then easily display products and their counts in order to easily see and organize what they have in their house.  
