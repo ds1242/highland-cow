@@ -13,12 +13,14 @@ import (
 )
 
 type apiConfig struct {
-	DB *database.Queries
+	DB        *database.Queries
+	JWTSecret string
 }
 
 func main() {
 	godotenv.Load()
 
+	jwtSecret := os.Getenv("JWT_SECRET")
 	port := os.Getenv("PORT")
 	if port == "" {
 		log.Fatal("PORT environment variable is not set")
@@ -37,7 +39,8 @@ func main() {
 	dbQueries := database.New(db)
 
 	cfg := &apiConfig{
-		DB: dbQueries,
+		DB:        dbQueries,
+		JWTSecret: jwtSecret,
 	}
 
 	mux := http.NewServeMux()
@@ -46,7 +49,9 @@ func main() {
 	mux.HandleFunc("GET /v1/err", errorHealthHandler)
 
 	mux.HandleFunc("POST /v1/users", cfg.handlerUsersCreate)
-	// mux.HandleFunc("GET /v1/users", cfg.handlerGetUser)
+	mux.HandleFunc("GET /v1/users", cfg.handlerUserLogin)
+	mux.HandleFunc("PUT /v1/users", cfg.middlewareAuth(cfg.handlerUserUpdate))
+	mux.HandleFunc("DELETE /v1/users", cfg.middlewareAuth(cfg.handlerUserDelete))
 
 	srv := &http.Server{
 		Addr:    ":" + port,

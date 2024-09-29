@@ -7,9 +7,11 @@ import (
 
 	"github.com/ds1242/highland-cow/internal/auth"
 	"github.com/ds1242/highland-cow/internal/database"
+	
 	"github.com/google/uuid"
 )
 
+// handler to Create New Users
 func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request) {
 	type Params struct {
 		Name     string `json:"name"`
@@ -31,6 +33,7 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 	passHash, err := auth.HashPassword(params.Password)
 	if err != nil {
 		RespondWithError(w, http.StatusBadRequest, "could not decode parameters")
+		return
 	}
 
 	newUser, err := cfg.DB.CreateUser(ctx, database.CreateUserParams{
@@ -42,12 +45,24 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 		Password:  passHash,
 	})
 	if err != nil {
-		RespondWithError(w, http.StatusInternalServerError, "Couldn't create users")
+		RespondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	RespondWithJSON(w, http.StatusCreated, databaseUserToUser(newUser))
+	// create token
+	defaultTokenExpiration := 60 * 60
+
+	token, err := auth.CreateToken(newUser.ID.String(), defaultTokenExpiration, cfg.JWTSecret)
+	if err != nil {
+		RespondWithError(w, http.StatusUnauthorized, err.Error())
+		return
+	}
+	convertedUser := databaseUserToUser(newUser)
+	userResponse := createUserResponse(convertedUser, token)
+
+	RespondWithJSON(w, http.StatusCreated, userResponse)
 }
 
-// func (cfg *apiConfig) handlerGetUser(w http.ResponseWriter, r *http.Request, user database.User) {
-// 	RespondWithJSON(w, http.StatusOK, databaseUserToUser(user))
-// }
+
+
+
+
