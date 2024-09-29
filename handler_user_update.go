@@ -9,7 +9,7 @@ import (
 	"github.com/ds1242/highland-cow/internal/database"
 )
 
-func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request, userToUpdate User) {
+func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request, userToUpdate User, tokenString string) {
 	type Params struct {
 		Name     string `json:"name,omitempty"`
 		Email    string `json:"email,omitempty"`
@@ -68,7 +68,7 @@ func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request, 
 	// convert from dbUser struct to handler User struct
 	updatedUser := databaseUserToUser(updatedDBUser)
 	// create user response
-	userResponse := updatedUserResponse(updatedUser)
+	userResponse := createUserResponse(updatedUser, tokenString)
 	// send updated response
 	RespondWithJSON(w, http.StatusOK, userResponse)
 

@@ -10,7 +10,7 @@ import (
 
 var ErrNoAuthHeaderIncluded = "no authorization header included"
 
-type authedHandler func(http.ResponseWriter, *http.Request, User)
+type authedHandler func(http.ResponseWriter, *http.Request, User, string)
 
 func (cfg *apiConfig) middlewareAuth(handler authedHandler) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -45,7 +45,7 @@ func (cfg *apiConfig) middlewareAuth(handler authedHandler) http.HandlerFunc {
 		}
 
 		userToHandle := databaseUserToUser(user)
-		handler(w, r, userToHandle)
+		handler(w, r, userToHandle, tokenString)
 
 	}
 }

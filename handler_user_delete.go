@@ -6,7 +6,7 @@ import (
 
 
 
-func (cfg *apiConfig) handlerUserDelete(w http.ResponseWriter, r *http.Request, user User) {
+func (cfg *apiConfig) handlerUserDelete(w http.ResponseWriter, r *http.Request, user User, tokenString string) {
 	ctx := r.Context()
 
 	err := cfg.DB.DeleteUserByID(ctx, user.ID)
