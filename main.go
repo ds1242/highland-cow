@@ -45,9 +45,11 @@ func main() {
 
 	mux := http.NewServeMux()
 
+	// Health/Error test routes
 	mux.HandleFunc("GET /v1/healthz", healthzHandler)
 	mux.HandleFunc("GET /v1/err", errorHealthHandler)
 
+	// User Routes
 	mux.HandleFunc("POST /v1/users", cfg.handlerUsersCreate)
 	mux.HandleFunc("GET /v1/users", cfg.handlerUserLogin)
 	mux.HandleFunc("PUT /v1/users", cfg.middlewareAuth(cfg.handlerUserUpdate))
