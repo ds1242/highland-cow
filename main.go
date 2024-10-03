@@ -55,6 +55,9 @@ func main() {
 	mux.HandleFunc("PUT /v1/users", cfg.middlewareAuth(cfg.handlerUserUpdate))
 	mux.HandleFunc("DELETE /v1/users", cfg.middlewareAuth(cfg.handlerUserDelete))
 
+	// Product Routes
+	mux.HandleFunc("POST /v1/scan_product", cfg.middlewareAuth(cfg.handlerScanProduct))
+
 	srv := &http.Server{
 		Addr:    ":" + port,
 		Handler: mux,
