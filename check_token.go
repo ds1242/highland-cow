@@ -1,13 +1,13 @@
 package main
 
-import(
+import (
 	"fmt"
 
-	"github.com/golang-jwt/jwt/v5"
 	"github.com/ds1242/highland-cow/internal/auth"
+	"github.com/golang-jwt/jwt/v5"
 )
 
-func CheckToken(tokenString string, cfg *apiConfig) (*auth.UserClaim, error){
+func CheckToken(tokenString string, cfg *apiConfig) (*auth.UserClaim, error) {
 	claims := &auth.UserClaim{}
 
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
