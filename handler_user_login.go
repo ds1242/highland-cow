@@ -1,8 +1,8 @@
 package main
 
 import (
-	"net/http"
 	"encoding/json"
+	"net/http"
 
 	"github.com/ds1242/highland-cow/internal/auth"
 )

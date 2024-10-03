@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"strings"
 
-
 	"github.com/google/uuid"
 )
 
@@ -19,7 +18,6 @@ func (cfg *apiConfig) middlewareAuth(handler authedHandler) http.HandlerFunc {
 			RespondWithError(w, http.StatusBadRequest, ErrNoAuthHeaderIncluded)
 			return
 		}
-
 
 		authHeader := r.Header.Get("Authorization")
 		// trim out Bearer from token
@@ -40,7 +38,7 @@ func (cfg *apiConfig) middlewareAuth(handler authedHandler) http.HandlerFunc {
 		}
 
 		user, err := cfg.DB.GetUserByID(ctx, userID)
-		if err != nil{
+		if err != nil {
 			RespondWithJSON(w, http.StatusBadRequest, "error finding that user")
 		}
 

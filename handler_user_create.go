@@ -7,7 +7,7 @@ import (
 
 	"github.com/ds1242/highland-cow/internal/auth"
 	"github.com/ds1242/highland-cow/internal/database"
-	
+
 	"github.com/google/uuid"
 )
 
@@ -61,8 +61,3 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 
 	RespondWithJSON(w, http.StatusCreated, userResponse)
 }
-
-
-
-
-

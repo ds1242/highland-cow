@@ -1,10 +1,10 @@
 package main
 
 import (
-	"net/http"
 	"encoding/json"
+	"net/http"
 	"time"
-	
+
 	"github.com/ds1242/highland-cow/internal/auth"
 	"github.com/ds1242/highland-cow/internal/database"
 )
@@ -24,7 +24,6 @@ func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request, 
 		RespondWithError(w, http.StatusBadRequest, "invalid request payload")
 		return
 	}
-
 
 	var hashedPass string
 	var emailToUpdate string
@@ -55,11 +54,11 @@ func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request, 
 	ctx := r.Context()
 
 	updatedDBUser, err := cfg.DB.UpdateUserByID(ctx, database.UpdateUserByIDParams{
-		Name:     nameToUpdate,
-		Email:    emailToUpdate,
-		Password: hashedPass,
+		Name:      nameToUpdate,
+		Email:     emailToUpdate,
+		Password:  hashedPass,
 		UpdatedAt: time.Now().UTC(),
-		ID:       userToUpdate.ID,
+		ID:        userToUpdate.ID,
 	})
 	if err != nil {
 		RespondWithError(w, http.StatusBadRequest, "unable to update user")
@@ -73,4 +72,3 @@ func (cfg *apiConfig) handlerUserUpdate(w http.ResponseWriter, r *http.Request, 
 	RespondWithJSON(w, http.StatusOK, userResponse)
 
 }
-
