@@ -21,6 +21,13 @@ type Product struct {
 	UpdatedAt   time.Time
 }
 
+type ProductScanned struct {
+	ID        uuid.UUID
+	ProductID uuid.UUID
+	UserID    uuid.UUID
+	Quantity  int32
+}
+
 type User struct {
 	ID        uuid.UUID
 	CreatedAt time.Time
