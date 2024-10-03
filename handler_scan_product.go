@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -21,4 +22,14 @@ func (cfg *apiConfig) handlerScanProduct(w http.ResponseWriter, r *http.Request,
 		RespondWithError(w, http.StatusBadRequest, "invalid request payload")
 		return
 	}
+
+	ctx := r.Context()
+
+	fmt.Println(params)
+	product, err := cfg.DB.GetProductByProductCode(ctx, params.ProductCode)
+	if err != nil {
+		fmt.Println("error getting product")
+		return
+	}
+	fmt.Println(product)
 }
