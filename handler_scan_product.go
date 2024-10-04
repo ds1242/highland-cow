@@ -4,6 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
+	"database/sql"
+
+	"github.com/ds1242/highland-cow/internal/database"
+	"github.com/google/uuid"
 )
 
 func (cfg *apiConfig) handlerScanProduct(w http.ResponseWriter, r *http.Request, user User, tokenString string) {
@@ -25,13 +30,23 @@ func (cfg *apiConfig) handlerScanProduct(w http.ResponseWriter, r *http.Request,
 
 	ctx := r.Context()
 
-	var firstProductScan bool
-
 	fmt.Println(params)
 	product, err := cfg.DB.GetProductByProductCode(ctx, params.ProductCode)
 	if err != nil {
-		firstProductScan = true
+		product, err = cfg.DB.AddProduct(ctx, database.AddProductParams{
+			ID: uuid.New(),
+			ProductName: params.ProductName,
+			Description: sql.NullString{String: params.Description, Valid: params.Description != ""},
+			Brand: sql.NullString{String: params.Brand, Valid: params.Brand != ""},
+			ProductCode: params.ProductCode,
+			CreatedAt: time.Now().UTC(),
+			UpdatedAt: time.Now().UTC(),
+		})
+		if err != nil {
+			RespondWithError(w, http.StatusBadRequest, "unable to find or add product")
+			return
+		}
 	}
 	fmt.Println(product)
-	fmt.Println(firstProductScan)
+
 }
