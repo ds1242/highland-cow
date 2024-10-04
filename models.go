@@ -42,3 +42,9 @@ func createUserResponse(user User, token string) UserResponse {
 		Token: token,
 	}
 }
+
+type Product struct {
+	ID          uuid.UUID `json:"ID"`
+	Name        string    `json:"product_name"`
+	Description string    `json:"description"`
+}

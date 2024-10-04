@@ -25,11 +25,13 @@ func (cfg *apiConfig) handlerScanProduct(w http.ResponseWriter, r *http.Request,
 
 	ctx := r.Context()
 
+	var firstProductScan bool
+
 	fmt.Println(params)
 	product, err := cfg.DB.GetProductByProductCode(ctx, params.ProductCode)
 	if err != nil {
-		fmt.Println("error getting product")
-		return
+		firstProductScan = true
 	}
 	fmt.Println(product)
+	fmt.Println(firstProductScan)
 }
