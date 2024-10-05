@@ -58,6 +58,9 @@ func main() {
 	// Product Routes
 	mux.HandleFunc("POST /v1/scan_product", cfg.middlewareAuth(cfg.handlerScanProduct))
 
+	// User Scan Feed
+	mux.HandleFunc("GET /v1/user_scans", cfg.middlewareAuth(cfg.handlerGetUserScanList))
+
 	srv := &http.Server{
 		Addr:    ":" + port,
 		Handler: mux,

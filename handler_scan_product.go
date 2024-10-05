@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -31,7 +30,6 @@ func (cfg *apiConfig) handlerScanProduct(w http.ResponseWriter, r *http.Request,
 
 	ctx := r.Context()
 
-	fmt.Println(params)
 	product, err := cfg.DB.GetProductByProductCode(ctx, params.ProductCode)
 	if err != nil {
 		product, err = cfg.DB.AddProduct(ctx, database.AddProductParams{
@@ -48,8 +46,6 @@ func (cfg *apiConfig) handlerScanProduct(w http.ResponseWriter, r *http.Request,
 			return
 		}
 	}
-
-	
 
 	previousScannedProduct, err := cfg.DB.GetScanByUserAndProductID(ctx, database.GetScanByUserAndProductIDParams{
 		UserID:    user.ID,
@@ -74,9 +70,6 @@ func (cfg *apiConfig) handlerScanProduct(w http.ResponseWriter, r *http.Request,
 		return
 	}
 
-	fmt.Println(product.ID)
-	fmt.Println(previousScannedProduct)
-
 	newQuantity := previousScannedProduct.Quantity + int32(params.Quantity)
 	updatedProduct, err := cfg.DB.UpdateScanQuantity(ctx, database.UpdateScanQuantityParams{
 		Quantity: newQuantity,
@@ -90,5 +83,4 @@ func (cfg *apiConfig) handlerScanProduct(w http.ResponseWriter, r *http.Request,
 
 	scanResponse := dbProductScanToProductScanResponse(updatedProduct)
 	RespondWithJSON(w, http.StatusOK, scanResponse)
-
 }
