@@ -30,6 +30,8 @@ func (cfg *apiConfig) handlerScanProduct(w http.ResponseWriter, r *http.Request,
 
 	ctx := r.Context()
 
+	// Checks if the product has been scanned previously, if not then it stores it in the DB
+	// both set the information to the product variable
 	product, err := cfg.DB.GetProductByProductCode(ctx, params.ProductCode)
 	if err != nil {
 		product, err = cfg.DB.AddProduct(ctx, database.AddProductParams{
@@ -47,11 +49,12 @@ func (cfg *apiConfig) handlerScanProduct(w http.ResponseWriter, r *http.Request,
 		}
 	}
 
+	// Checks if the user has scanned the product before
 	previousScannedProduct, err := cfg.DB.GetScanByUserAndProductID(ctx, database.GetScanByUserAndProductIDParams{
 		UserID:    user.ID,
 		ProductID: product.ID,
 	})
-
+	// if the user has not scanned bofore, adds a new product scan for that user
 	if err != nil {
 		dbProductScanned, err := cfg.DB.AddProductScan(ctx, database.AddProductScanParams{
 			ID:        uuid.New(),
@@ -69,7 +72,7 @@ func (cfg *apiConfig) handlerScanProduct(w http.ResponseWriter, r *http.Request,
 		RespondWithJSON(w, http.StatusOK, scanResponse)
 		return
 	}
-
+	// If previously scanned then it adds the new quantity to the old quantity
 	newQuantity := previousScannedProduct.Quantity + int32(params.Quantity)
 	updatedProduct, err := cfg.DB.UpdateScanQuantity(ctx, database.UpdateScanQuantityParams{
 		Quantity: newQuantity,

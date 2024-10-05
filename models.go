@@ -1,6 +1,8 @@
 package main
 
 import (
+	"database/sql"
+	"encoding/json"
 	"time"
 
 	"github.com/ds1242/highland-cow/internal/database"
@@ -70,11 +72,36 @@ type userListResponse struct {
 	ProductID   uuid.UUID `json:"product_id"`
 	UserID      uuid.UUID `json:"user_id"`
 	Quantity    int32     `json:"quantity"`
-	ID_2        uuid.UUID `json:"product_id"`
 	ProductName string    `json:"product_name"`
 	Description string    `json:"description,omitempty"`
 	Brand       string    `json:"brand,omitempty"`
 	ProductCode string    `json:"UPC"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`
+}
+
+type NullString sql.NullString
+
+func (x *NullString) MarshalJSON() ([]byte, error) {
+	if !x.Valid {
+		return []byte("null"), nil
+	}
+	return json.Marshal(x.String)
+}
+
+func databaseUserListToUserList(row database.GetUserListRow) userListResponse {
+	description := NullString(row.Description)
+	brand := NullString(row.Brand)
+	return userListResponse{
+		ID: row.ID,
+		ProductID: row.ProductID,
+		UserID: row.UserID,
+		Quantity: row.Quantity,
+		ProductName: row.ProductName,
+		Description: description.String,
+		Brand: brand.String,
+		ProductCode: row.ProductCode,
+		CreatedAt: row.CreatedAt,
+		UpdatedAt: row.UpdatedAt,
+	}
 }
