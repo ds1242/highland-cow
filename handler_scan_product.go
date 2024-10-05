@@ -61,7 +61,7 @@ func (cfg *apiConfig) handlerScanProduct(w http.ResponseWriter, r *http.Request,
 			ID:        uuid.New(),
 			ProductID: product.ID,
 			UserID:    user.ID,
-			Quantity:  1,
+			Quantity:  int32(params.Quantity),
 		})
 		if err != nil {
 			RespondWithError(w, http.StatusBadRequest, "unable to add product scan")
