@@ -43,6 +43,16 @@ func (q *Queries) AddProductScan(ctx context.Context, arg AddProductScanParams) 
 	return i, err
 }
 
+const deleteScanById = `-- name: DeleteScanById :exec
+DELETE FROM product_scanned
+WHERE id = $1
+`
+
+func (q *Queries) DeleteScanById(ctx context.Context, id uuid.UUID) error {
+	_, err := q.db.ExecContext(ctx, deleteScanById, id)
+	return err
+}
+
 const getScanById = `-- name: GetScanById :one
 SELECT id, product_id, user_id, quantity
 FROM product_scanned

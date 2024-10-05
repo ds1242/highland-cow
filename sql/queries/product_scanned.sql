@@ -26,3 +26,7 @@ RETURNING *;
 SELECT *
 FROM product_scanned
 WHERE id = $1;
+
+-- name: DeleteScanById :exec
+DELETE FROM product_scanned
+WHERE id = $1;

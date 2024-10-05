@@ -3,6 +3,8 @@ package main
 import (
 	"net/http"
 	"encoding/json"
+
+	"github.com/google/uuid"
 )
 
 func (cfg *apiConfig) handlerDeleteScan(w http.ResponseWriter, r *http.Request, user User, tokenString string) {
@@ -18,4 +20,20 @@ func (cfg *apiConfig) handlerDeleteScan(w http.ResponseWriter, r *http.Request, 
 		RespondWithError(w, http.StatusBadRequest, "invalid request payload")
 		return
 	}
+
+	scanID, err := uuid.Parse(params.ScanID)
+	if err != nil {
+		RespondWithError(w, http.StatusUnauthorized, "unable to parse scan id")
+		return
+	}
+
+	ctx := r.Context()
+
+	err = cfg.DB.DeleteScanById(ctx, scanID)
+	if err != nil {
+		RespondWithError(w, http.StatusBadRequest, "unable to delete scan")
+		return
+	}
+
+	RespondWithJSON(w, http.StatusOK, "scan deleted")
 }
