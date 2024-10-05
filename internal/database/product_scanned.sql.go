@@ -43,17 +43,71 @@ func (q *Queries) AddProductScan(ctx context.Context, arg AddProductScanParams) 
 	return i, err
 }
 
+const deleteScanById = `-- name: DeleteScanById :exec
+DELETE FROM product_scanned
+WHERE id = $1
+`
+
+func (q *Queries) DeleteScanById(ctx context.Context, id uuid.UUID) error {
+	_, err := q.db.ExecContext(ctx, deleteScanById, id)
+	return err
+}
+
+const getScanById = `-- name: GetScanById :one
+SELECT id, product_id, user_id, quantity
+FROM product_scanned
+WHERE id = $1
+`
+
+func (q *Queries) GetScanById(ctx context.Context, id uuid.UUID) (ProductScanned, error) {
+	row := q.db.QueryRowContext(ctx, getScanById, id)
+	var i ProductScanned
+	err := row.Scan(
+		&i.ID,
+		&i.ProductID,
+		&i.UserID,
+		&i.Quantity,
+	)
+	return i, err
+}
+
+const getScanByUserAndProductID = `-- name: GetScanByUserAndProductID :one
+SELECT id, product_id, user_id, quantity
+FROM product_scanned
+WHERE user_id = $1
+AND product_id = $2
+`
+
+type GetScanByUserAndProductIDParams struct {
+	UserID    uuid.UUID
+	ProductID uuid.UUID
+}
+
+func (q *Queries) GetScanByUserAndProductID(ctx context.Context, arg GetScanByUserAndProductIDParams) (ProductScanned, error) {
+	row := q.db.QueryRowContext(ctx, getScanByUserAndProductID, arg.UserID, arg.ProductID)
+	var i ProductScanned
+	err := row.Scan(
+		&i.ID,
+		&i.ProductID,
+		&i.UserID,
+		&i.Quantity,
+	)
+	return i, err
+}
+
 const getUserList = `-- name: GetUserList :many
 SELECT product_scanned.id, product_id, user_id, quantity, products.id, product_name, description, brand, product_code, created_at, updated_at
 FROM product_scanned
-RIGHT JOIN products ON product_scanned.product_id = product.id
+JOIN products
+ON product_scanned.product_id = products.id
+WHERE product_scanned.user_id = $1
 `
 
 type GetUserListRow struct {
-	ID          uuid.NullUUID
-	ProductID   uuid.NullUUID
-	UserID      uuid.NullUUID
-	Quantity    sql.NullInt32
+	ID          uuid.UUID
+	ProductID   uuid.UUID
+	UserID      uuid.UUID
+	Quantity    int32
 	ID_2        uuid.UUID
 	ProductName string
 	Description sql.NullString
@@ -63,8 +117,8 @@ type GetUserListRow struct {
 	UpdatedAt   time.Time
 }
 
-func (q *Queries) GetUserList(ctx context.Context) ([]GetUserListRow, error) {
-	rows, err := q.db.QueryContext(ctx, getUserList)
+func (q *Queries) GetUserList(ctx context.Context, userID uuid.UUID) ([]GetUserListRow, error) {
+	rows, err := q.db.QueryContext(ctx, getUserList, userID)
 	if err != nil {
 		return nil, err
 	}
@@ -96,4 +150,28 @@ func (q *Queries) GetUserList(ctx context.Context) ([]GetUserListRow, error) {
 		return nil, err
 	}
 	return items, nil
+}
+
+const updateScanQuantity = `-- name: UpdateScanQuantity :one
+UPDATE product_scanned
+SET quantity = $1
+WHERE id = $2
+RETURNING id, product_id, user_id, quantity
+`
+
+type UpdateScanQuantityParams struct {
+	Quantity int32
+	ID       uuid.UUID
+}
+
+func (q *Queries) UpdateScanQuantity(ctx context.Context, arg UpdateScanQuantityParams) (ProductScanned, error) {
+	row := q.db.QueryRowContext(ctx, updateScanQuantity, arg.Quantity, arg.ID)
+	var i ProductScanned
+	err := row.Scan(
+		&i.ID,
+		&i.ProductID,
+		&i.UserID,
+		&i.Quantity,
+	)
+	return i, err
 }

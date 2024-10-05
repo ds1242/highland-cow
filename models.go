@@ -1,6 +1,8 @@
 package main
 
 import (
+	"database/sql"
+	"encoding/json"
 	"time"
 
 	"github.com/ds1242/highland-cow/internal/database"
@@ -40,5 +42,66 @@ func createUserResponse(user User, token string) UserResponse {
 		Name:  user.Name,
 		Email: user.Email,
 		Token: token,
+	}
+}
+
+type Product struct {
+	ID          uuid.UUID `json:"ID"`
+	Name        string    `json:"product_name"`
+	Description string    `json:"description"`
+}
+
+type productScanned struct {
+	ID        uuid.UUID `json:"scan_id"`
+	ProductID uuid.UUID `json:"product_id"`
+	UserID    uuid.UUID `json:"user_id"`
+	Quantity  int32     `json:"quantity"`
+}
+
+func dbProductScanToProductScanResponse(scan database.ProductScanned) productScanned {
+	return productScanned{
+		ID:        scan.ID,
+		ProductID: scan.ProductID,
+		UserID:    scan.UserID,
+		Quantity:  scan.Quantity,
+	}
+}
+
+type userListResponse struct {
+	ID          uuid.UUID `json:"scan_id"`
+	ProductID   uuid.UUID `json:"product_id"`
+	UserID      uuid.UUID `json:"user_id"`
+	Quantity    int32     `json:"quantity"`
+	ProductName string    `json:"product_name"`
+	Description string    `json:"description,omitempty"`
+	Brand       string    `json:"brand,omitempty"`
+	ProductCode string    `json:"UPC"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+}
+
+type NullString sql.NullString
+
+func (x *NullString) MarshalJSON() ([]byte, error) {
+	if !x.Valid {
+		return []byte("null"), nil
+	}
+	return json.Marshal(x.String)
+}
+
+func databaseUserListToUserList(row database.GetUserListRow) userListResponse {
+	description := NullString(row.Description)
+	brand := NullString(row.Brand)
+	return userListResponse{
+		ID:          row.ID,
+		ProductID:   row.ProductID,
+		UserID:      row.UserID,
+		Quantity:    row.Quantity,
+		ProductName: row.ProductName,
+		Description: description.String,
+		Brand:       brand.String,
+		ProductCode: row.ProductCode,
+		CreatedAt:   row.CreatedAt,
+		UpdatedAt:   row.UpdatedAt,
 	}
 }
