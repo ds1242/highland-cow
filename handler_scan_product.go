@@ -51,7 +51,7 @@ func (cfg *apiConfig) handlerScanProduct(w http.ResponseWriter, r *http.Request,
 		UserID:    user.ID,
 		ProductID: product.ID,
 	})
-	
+
 	if err != nil {
 		dbProductScanned, err := cfg.DB.AddProductScan(ctx, database.AddProductScanParams{
 			ID:        uuid.New(),
@@ -73,7 +73,7 @@ func (cfg *apiConfig) handlerScanProduct(w http.ResponseWriter, r *http.Request,
 	newQuantity := previousScannedProduct.Quantity + int32(params.Quantity)
 	updatedProduct, err := cfg.DB.UpdateScanQuantity(ctx, database.UpdateScanQuantityParams{
 		Quantity: newQuantity,
-		ID: previousScannedProduct.ID,
+		ID:       previousScannedProduct.ID,
 	})
 
 	if err != nil {

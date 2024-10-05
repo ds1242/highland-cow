@@ -1,8 +1,8 @@
 package main
 
 import (
-	"net/http"
 	"fmt"
+	"net/http"
 )
 
 func (cfg *apiConfig) handlerGetUserScanList(w http.ResponseWriter, r *http.Request, user User, tokenString string) {
@@ -14,4 +14,5 @@ func (cfg *apiConfig) handlerGetUserScanList(w http.ResponseWriter, r *http.Requ
 		return
 	}
 	fmt.Println(userList)
+	// Setup func to convert to a json response struct
 }

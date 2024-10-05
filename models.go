@@ -49,19 +49,32 @@ type Product struct {
 	Description string    `json:"description"`
 }
 
-
 type productScanned struct {
-	ID        uuid.UUID	`json:"scan_id"`
-	ProductID uuid.UUID	`json:"product_id"`
-	UserID    uuid.UUID	`json:"user_id"`
-	Quantity  int32		`json:"quantity"`
+	ID        uuid.UUID `json:"scan_id"`
+	ProductID uuid.UUID `json:"product_id"`
+	UserID    uuid.UUID `json:"user_id"`
+	Quantity  int32     `json:"quantity"`
 }
 
 func dbProductScanToProductScanResponse(scan database.ProductScanned) productScanned {
 	return productScanned{
-		ID: scan.ID,
+		ID:        scan.ID,
 		ProductID: scan.ProductID,
-		UserID: scan.UserID,
-		Quantity: scan.Quantity,
+		UserID:    scan.UserID,
+		Quantity:  scan.Quantity,
 	}
+}
+
+type userListResponse struct {
+	ID          uuid.UUID `json:"scan_id"`
+	ProductID   uuid.UUID `json:"product_id"`
+	UserID      uuid.UUID `json:"user_id"`
+	Quantity    int32     `json:"quantity"`
+	ID_2        uuid.UUID `json:"product_id"`
+	ProductName string    `json:"product_name"`
+	Description string    `json:"description,omitempty"`
+	Brand       string    `json:"brand,omitempty"`
+	ProductCode string    `json:"UPC"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }
