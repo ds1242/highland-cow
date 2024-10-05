@@ -7,3 +7,15 @@ RETURNING *;
 SELECT *
 FROM product_scanned
 RIGHT JOIN products ON product_scanned.product_id = product.id;
+
+-- name: GetScanByUserAndProductID :one
+SELECT *
+FROM product_scanned
+WHERE user_id = $1
+AND product_id = $2;
+
+-- name: UpdateScanQuantity :one
+UPDATE product_scanned
+SET quantity = $1
+WHERE id = $1
+RETURNING *;

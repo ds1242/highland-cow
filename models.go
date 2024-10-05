@@ -48,3 +48,20 @@ type Product struct {
 	Name        string    `json:"product_name"`
 	Description string    `json:"description"`
 }
+
+
+type productScanned struct {
+	ID        uuid.UUID	`json:"scan_id"`
+	ProductID uuid.UUID	`json:"product_id"`
+	UserID    uuid.UUID	`json:"user_id"`
+	Quantity  int32		`json:"quantity"`
+}
+
+func dbProductScanToProductScanResponse(scan database.ProductScanned) productScanned {
+	return productScanned{
+		ID: scan.ID,
+		ProductID: scan.ProductID,
+		UserID: scan.UserID,
+		Quantity: scan.Quantity,
+	}
+}

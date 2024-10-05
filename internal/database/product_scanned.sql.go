@@ -43,6 +43,30 @@ func (q *Queries) AddProductScan(ctx context.Context, arg AddProductScanParams) 
 	return i, err
 }
 
+const getScanByUserAndProductID = `-- name: GetScanByUserAndProductID :one
+SELECT id, product_id, user_id, quantity
+FROM product_scanned
+WHERE user_id = $1
+AND product_id = $2
+`
+
+type GetScanByUserAndProductIDParams struct {
+	UserID    uuid.UUID
+	ProductID uuid.UUID
+}
+
+func (q *Queries) GetScanByUserAndProductID(ctx context.Context, arg GetScanByUserAndProductIDParams) (ProductScanned, error) {
+	row := q.db.QueryRowContext(ctx, getScanByUserAndProductID, arg.UserID, arg.ProductID)
+	var i ProductScanned
+	err := row.Scan(
+		&i.ID,
+		&i.ProductID,
+		&i.UserID,
+		&i.Quantity,
+	)
+	return i, err
+}
+
 const getUserList = `-- name: GetUserList :many
 SELECT product_scanned.id, product_id, user_id, quantity, products.id, product_name, description, brand, product_code, created_at, updated_at
 FROM product_scanned
@@ -96,4 +120,23 @@ func (q *Queries) GetUserList(ctx context.Context) ([]GetUserListRow, error) {
 		return nil, err
 	}
 	return items, nil
+}
+
+const updateScanQuantity = `-- name: UpdateScanQuantity :one
+UPDATE product_scanned
+SET quantity = $1
+WHERE id = $1
+RETURNING id, product_id, user_id, quantity
+`
+
+func (q *Queries) UpdateScanQuantity(ctx context.Context, quantity int32) (ProductScanned, error) {
+	row := q.db.QueryRowContext(ctx, updateScanQuantity, quantity)
+	var i ProductScanned
+	err := row.Scan(
+		&i.ID,
+		&i.ProductID,
+		&i.UserID,
+		&i.Quantity,
+	)
+	return i, err
 }

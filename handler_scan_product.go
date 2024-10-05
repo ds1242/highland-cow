@@ -47,19 +47,35 @@ func (cfg *apiConfig) handlerScanProduct(w http.ResponseWriter, r *http.Request,
 			RespondWithError(w, http.StatusBadRequest, "unable to find or add product")
 			return
 		}
+	}
 
-		_, err := cfg.DB.AddProductScan(ctx, database.AddProductScanParams{
-			ID: uuid.New(),
+	
+
+	previousScannedProduct, err := cfg.DB.GetScanByUserAndProductID(ctx, database.GetScanByUserAndProductIDParams{
+		UserID:    user.ID,
+		ProductID: product.ID,
+	})
+	
+	if err != nil {
+		dbProductScanned, err := cfg.DB.AddProductScan(ctx, database.AddProductScanParams{
+			ID:        uuid.New(),
 			ProductID: product.ID,
-			UserID: user.ID,
-			Quantity: 1,
+			UserID:    user.ID,
+			Quantity:  1,
 		})
 		if err != nil {
 			RespondWithError(w, http.StatusBadRequest, "unable to add product scan")
 			return
 		}
+
+		scanResponse := dbProductScanToProductScanResponse(dbProductScanned)
+
+		RespondWithJSON(w, http.StatusOK, scanResponse)
+		return
 	}
+
 	fmt.Println(product.ID)
 	fmt.Println(params.Quantity)
+	fmt.Println(previousScannedProduct)
 
 }
