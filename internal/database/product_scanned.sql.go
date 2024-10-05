@@ -70,14 +70,16 @@ func (q *Queries) GetScanByUserAndProductID(ctx context.Context, arg GetScanByUs
 const getUserList = `-- name: GetUserList :many
 SELECT product_scanned.id, product_id, user_id, quantity, products.id, product_name, description, brand, product_code, created_at, updated_at
 FROM product_scanned
-RIGHT JOIN products ON product_scanned.product_id = product.id
+JOIN products
+ON product_scanned.product_id = products.id
+WHERE product_scanned.user_id = $1
 `
 
 type GetUserListRow struct {
-	ID          uuid.NullUUID
-	ProductID   uuid.NullUUID
-	UserID      uuid.NullUUID
-	Quantity    sql.NullInt32
+	ID          uuid.UUID
+	ProductID   uuid.UUID
+	UserID      uuid.UUID
+	Quantity    int32
 	ID_2        uuid.UUID
 	ProductName string
 	Description sql.NullString
@@ -87,8 +89,8 @@ type GetUserListRow struct {
 	UpdatedAt   time.Time
 }
 
-func (q *Queries) GetUserList(ctx context.Context) ([]GetUserListRow, error) {
-	rows, err := q.db.QueryContext(ctx, getUserList)
+func (q *Queries) GetUserList(ctx context.Context, userID uuid.UUID) ([]GetUserListRow, error) {
+	rows, err := q.db.QueryContext(ctx, getUserList, userID)
 	if err != nil {
 		return nil, err
 	}

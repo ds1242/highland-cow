@@ -6,7 +6,9 @@ RETURNING *;
 -- name: GetUserList :many
 SELECT *
 FROM product_scanned
-RIGHT JOIN products ON product_scanned.product_id = product.id;
+JOIN products
+ON product_scanned.product_id = products.id
+WHERE product_scanned.user_id = $1;
 
 -- name: GetScanByUserAndProductID :one
 SELECT *
