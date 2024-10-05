@@ -43,6 +43,24 @@ func (q *Queries) AddProductScan(ctx context.Context, arg AddProductScanParams) 
 	return i, err
 }
 
+const getScanById = `-- name: GetScanById :one
+SELECT id, product_id, user_id, quantity
+FROM product_scanned
+WHERE id = $1
+`
+
+func (q *Queries) GetScanById(ctx context.Context, id uuid.UUID) (ProductScanned, error) {
+	row := q.db.QueryRowContext(ctx, getScanById, id)
+	var i ProductScanned
+	err := row.Scan(
+		&i.ID,
+		&i.ProductID,
+		&i.UserID,
+		&i.Quantity,
+	)
+	return i, err
+}
+
 const getScanByUserAndProductID = `-- name: GetScanByUserAndProductID :one
 SELECT id, product_id, user_id, quantity
 FROM product_scanned

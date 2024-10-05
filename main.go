@@ -57,6 +57,7 @@ func main() {
 
 	// Product Routes
 	mux.HandleFunc("POST /v1/scan_product", cfg.middlewareAuth(cfg.handlerScanProduct))
+	mux.HandleFunc("PUT /v1/scan_product", cfg.middlewareAuth(cfg.handlerUpdateScan))
 
 	// User Scan Feed
 	mux.HandleFunc("GET /v1/user_scans", cfg.middlewareAuth(cfg.handlerGetUserScanList))

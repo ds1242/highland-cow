@@ -21,3 +21,8 @@ UPDATE product_scanned
 SET quantity = $1
 WHERE id = $2
 RETURNING *;
+
+-- name: GetScanById :one
+SELECT *
+FROM product_scanned
+WHERE id = $1;
