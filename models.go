@@ -93,15 +93,15 @@ func databaseUserListToUserList(row database.GetUserListRow) userListResponse {
 	description := NullString(row.Description)
 	brand := NullString(row.Brand)
 	return userListResponse{
-		ID: row.ID,
-		ProductID: row.ProductID,
-		UserID: row.UserID,
-		Quantity: row.Quantity,
+		ID:          row.ID,
+		ProductID:   row.ProductID,
+		UserID:      row.UserID,
+		Quantity:    row.Quantity,
 		ProductName: row.ProductName,
 		Description: description.String,
-		Brand: brand.String,
+		Brand:       brand.String,
 		ProductCode: row.ProductCode,
-		CreatedAt: row.CreatedAt,
-		UpdatedAt: row.UpdatedAt,
+		CreatedAt:   row.CreatedAt,
+		UpdatedAt:   row.UpdatedAt,
 	}
 }
