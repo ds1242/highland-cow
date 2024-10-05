@@ -125,12 +125,17 @@ func (q *Queries) GetUserList(ctx context.Context) ([]GetUserListRow, error) {
 const updateScanQuantity = `-- name: UpdateScanQuantity :one
 UPDATE product_scanned
 SET quantity = $1
-WHERE id = $1
+WHERE id = $2
 RETURNING id, product_id, user_id, quantity
 `
 
-func (q *Queries) UpdateScanQuantity(ctx context.Context, quantity int32) (ProductScanned, error) {
-	row := q.db.QueryRowContext(ctx, updateScanQuantity, quantity)
+type UpdateScanQuantityParams struct {
+	Quantity int32
+	ID       uuid.UUID
+}
+
+func (q *Queries) UpdateScanQuantity(ctx context.Context, arg UpdateScanQuantityParams) (ProductScanned, error) {
+	row := q.db.QueryRowContext(ctx, updateScanQuantity, arg.Quantity, arg.ID)
 	var i ProductScanned
 	err := row.Scan(
 		&i.ID,

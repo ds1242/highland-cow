@@ -17,5 +17,5 @@ AND product_id = $2;
 -- name: UpdateScanQuantity :one
 UPDATE product_scanned
 SET quantity = $1
-WHERE id = $1
+WHERE id = $2
 RETURNING *;

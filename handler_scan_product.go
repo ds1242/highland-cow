@@ -75,7 +75,20 @@ func (cfg *apiConfig) handlerScanProduct(w http.ResponseWriter, r *http.Request,
 	}
 
 	fmt.Println(product.ID)
-	fmt.Println(params.Quantity)
 	fmt.Println(previousScannedProduct)
+
+	newQuantity := previousScannedProduct.Quantity + int32(params.Quantity)
+	updatedProduct, err := cfg.DB.UpdateScanQuantity(ctx, database.UpdateScanQuantityParams{
+		Quantity: newQuantity,
+		ID: previousScannedProduct.ID,
+	})
+
+	if err != nil {
+		RespondWithError(w, http.StatusBadRequest, "unable to update product quantity")
+		return
+	}
+
+	scanResponse := dbProductScanToProductScanResponse(updatedProduct)
+	RespondWithJSON(w, http.StatusOK, scanResponse)
 
 }
