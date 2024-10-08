@@ -1,16 +1,14 @@
-import Image from "next/image";
-import brand  from "../public/brand_cow.jpg"
+
+import NavBrand from "./NavBrand";
+import Link from "next/link";
 
 export default function NavLayout() {
-    return(
-        <nav className="container">
-            <Image
-                src={brand}
-                width={50}
-                height={50}
-                alt="brand image"
-                className=""
-            />
+    return (
+        <nav className="container flex flex-row">
+            <NavBrand />
+            <div className="grow"></div>
+            <Link href="/Login">Login</Link>
+            <Link href="/Login">Sign Up</Link>
         </nav>
     );
 }
