@@ -18,20 +18,23 @@ export default function NavLayout() {
         },
         {
             id: "1",
-            url: "/sign-up",
+            url: "/signup",
             linkTitle: "Sign Up"
         }
     ]
 
     return (
-        <nav className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2">
+        <nav className="bg-slate-600 grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2">
             <div className="grow">
                 <NavBrand />
             </div>
             <div className="flex justify-center md:justify-end md:align-middle" >
                 {linkArr.map(function (link) {
                     return (
-                        <Link className="content-center text-sky-500 text-2xl md:text-2xl mx-3 hover:text-sky-100 ease-in" key={link.id} href={link.url}>{link.linkTitle}</Link>
+                        <Link className="content-center text-sky-500 text-2xl md:text-2xl mx-3 hover:text-sky-100 ease-in" 
+                        key={link.id} 
+                        href={link.url}
+                        >{link.linkTitle}</Link>
                     )
                 })}
             </div>
