@@ -1,10 +1,14 @@
-import NavLayout from "@/components/NavLayout";
-import Image from "next/image";
+
+
 
 export default function Home() {
   return (
-    <main className="bg-slate-600">
-      <NavLayout />
+    <main className="grid grid-rows-4 bg-slate-400">
+
+      <section className="">
+        content
+      </section>
+
     </main>
   );
 }

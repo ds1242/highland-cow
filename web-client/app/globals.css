@@ -25,3 +25,21 @@ body {
     text-wrap: balance;
   }
 }
+
+.nav-wave {
+  
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.nav-wave svg {
+  position: relative;
+  display: block;
+  width: calc(117% + 1.3px);
+  height: 85px;
+}
+
+.nav-wave .shape-fill {
+  fill: #475569;
+}
