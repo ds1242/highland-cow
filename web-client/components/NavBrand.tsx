@@ -4,7 +4,7 @@ import brand from "../public/brand_cow.jpg"
 
 export default function NavBrand() {
     return (
-        <div className="flex flex-row content-center justify-center lg:justify-normal">
+        <div className="flex flex-row content-center justify-center md:justify-normal">
             <Image
                 src={brand}
                 width={100}
