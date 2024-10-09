@@ -10,7 +10,7 @@ export default function NavLayout() {
         url: string,
         linkTitle: string
     }
-    let linkArr: Array<siteLinks> = [
+    const linkArr: Array<siteLinks> = [
         {
             id: "0",
             url: "/login",
