@@ -4,7 +4,7 @@ import brand from "../public/brand_cow.jpg"
 
 export default function NavBrand() {
     return (
-        <div className="flex flex-row content-center">
+        <div className="flex flex-row content-center justify-center lg:justify-normal">
             <Image
                 src={brand}
                 width={100}
@@ -15,9 +15,9 @@ export default function NavBrand() {
             />
             <Link
                 href="/"
-                className="flex flex-row"
+                className="content-center"
             >
-                <h1 className="content-center p-2 text-3xl text-sky-500 hover:text-sky-100 ease-in">
+                <h1 className="content-center p-2 text-2xl lg:text-3xl text-sky-500 hover:text-sky-100 ease-in">
                     The Highland Cow
                 </h1>
             </Link>
