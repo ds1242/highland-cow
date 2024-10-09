@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import brand from "../public/brand_cow.jpg"
 
-export default function NavBrand({ site_title }) {
+export default function NavBrand() {
     return (
         <div className="flex flex-row content-center">
             <Image
@@ -17,8 +17,8 @@ export default function NavBrand({ site_title }) {
                 href="/"
                 className="flex flex-row"
             >
-                <h1 className="content-center p-2 text-3xl text-sky-500 hover:text-sky-700 ease-in">
-                    { site_title }
+                <h1 className="content-center p-2 text-3xl text-sky-500 hover:text-sky-100 ease-in">
+                    The Highland Cow
                 </h1>
             </Link>
         </div>
