@@ -1,5 +1,5 @@
-import HeaderWave from "./HeaderWave";
-import NavLayout from "./NavLayout";
+import HeaderWave from "./HeaderItems/HeaderWave";
+import NavLayout from "./HeaderItems/NavLayout";
 
 
 export default function Header() {

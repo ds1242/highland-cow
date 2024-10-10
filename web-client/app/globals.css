@@ -27,7 +27,6 @@ body {
 }
 
 .nav-wave {
-  
   width: 100%;
   overflow: hidden;
   line-height: 0;
@@ -36,10 +35,10 @@ body {
 .nav-wave svg {
   position: relative;
   display: block;
-  width: calc(117% + 1.3px);
-  height: 85px;
+  width: calc(106% + 1.3px);
+  height: 90px;
 }
 
 .nav-wave .shape-fill {
-  fill: #475569;
+  fill: #334155;
 }
