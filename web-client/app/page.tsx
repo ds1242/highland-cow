@@ -3,12 +3,12 @@
 
 export default function Home() {
   return (
-    <main className="grid grid-rows-4 bg-slate-400">
+    <section className="grid grid-rows-4 bg-slate-400">
 
-      <section className="">
+      <div className="">
         content
-      </section>
+      </div>
 
-    </main>
+    </section>
   );
 }

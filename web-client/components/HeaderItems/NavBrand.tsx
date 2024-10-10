@@ -11,12 +11,8 @@ export default function NavBrand() {
                 height={100}
                 alt="brand image"
                 className="rounded-full p-2"
-
             />
-            <Link
-                href="/"
-                className="content-center"
-            >
+            <Link href="/" className="content-center">
                 <h1 className="content-center p-2 text-2xl lg:text-3xl text-sky-500 hover:text-sky-100 ease-in">
                     The Highland Cow
                 </h1>
