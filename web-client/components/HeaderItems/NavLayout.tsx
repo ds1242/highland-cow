@@ -31,10 +31,11 @@ export default function NavLayout() {
             <div className="flex justify-center md:justify-end md:align-middle" >
                 {linkArr.map(function (link) {
                     return (
-                        <Link className="content-center text-sky-400 text-2xl md:text-2xl mx-3 hover:text-sky-100 ease-in"
-                            key={link.id}
-                            href={link.url}
-                        >{link.linkTitle}</Link>
+                        <Link className="content-center text-sky-400 text-2xl md:text-2xl mx-3 hover:text-sky-100 ease-in" key={link.id} href={link.url}>
+                            <button className="bg-slate-900 p-3">
+                                {link.linkTitle}
+                            </button>
+                        </Link>
                     )
                 })}
             </div>
