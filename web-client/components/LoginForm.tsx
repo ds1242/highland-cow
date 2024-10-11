@@ -5,7 +5,7 @@ import { useState } from "react"
 export default function LoginForm() {
     const [formData, setFormData] = useState({ email: '', password: '' });
 
-    const handleChange = (event) => {
+    const handleChange = (event:any) => {
         const { name, value } = event.target;
 
         setFormData({
@@ -15,7 +15,7 @@ export default function LoginForm() {
     };
 
     // submit form
-    const handleFormSubmit = async event => {
+    const handleFormSubmit = async (event:any) => {
         event.preventDefault();
 
         try {
@@ -32,7 +32,7 @@ export default function LoginForm() {
 
 
     return (
-        <div className="bg-slate-600 border border-2 ">
+        <div className="bg-slate-600 border-2 w-3/4 mx-auto h-">
             <form className=" grid space-y-3 p-5 m-5" onSubmit={handleFormSubmit}>
                 <input
                     className=""
