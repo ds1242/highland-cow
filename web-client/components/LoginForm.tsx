@@ -32,10 +32,10 @@ export default function LoginForm() {
 
 
     return (
-        <div className="bg-slate-600 border-2 w-3/4 mx-auto h-">
-            <form className=" grid space-y-3 p-5 m-5" onSubmit={handleFormSubmit}>
+        <div className="bg-slate-200 border-2 border-slate-300 rounded-xl w-1/2 mx-auto min-h-48 shadow-lg">
+            <form className=" grid space-y-3 p-5 m-5 gap-3" onSubmit={handleFormSubmit}>
                 <input
-                    className=""
+                    className="bg-slate-100 border-2 border-slate-300 rounded-md p-1 shadow-inner"
                     id="email"
                     type="email"
                     name="email"
@@ -44,7 +44,7 @@ export default function LoginForm() {
                     onChange={handleChange}
                 />
                 <input
-                    className=""
+                    className="bg-slate-100 border-2 border-slate-300 rounded-md p-1 shadow-inner"
                     id="password"
                     type="password"
                     name="password"
@@ -52,7 +52,7 @@ export default function LoginForm() {
                     value={formData.password}
                     onChange={handleChange}
                 />
-                <button type="submit">Submit</button>
+                <button type="submit" className="mx-auto bg-slate-900 text-slate-100 w-28 h-14 rounded-md hover:bg-sky-600 shadow-xl">Submit</button>
             </form>
         </div>
     )
