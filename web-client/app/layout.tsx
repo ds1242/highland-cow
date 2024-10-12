@@ -34,7 +34,7 @@ export default function RootLayout({
     <html lang="en" >
       <body className={`${inter.className} antialiased h-screen flex flex-col justify-between`}>
         <Header />
-        <main className="mb-auto">
+        <main className="mb-auto h-screen">
           {children}
         </main>
         <Footer />

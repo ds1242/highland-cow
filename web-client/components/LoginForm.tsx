@@ -1,5 +1,6 @@
 'use client'
 import { useState } from "react"
+import Link from "next/link";
 
 
 export default function LoginForm() {
@@ -32,7 +33,7 @@ export default function LoginForm() {
 
 
     return (
-        <div className="bg-slate-200 border-2 border-slate-300 rounded-xl w-1/2 mx-auto min-h-48 shadow-lg">
+        <div className="bg-slate-200 border-2 border-slate-300 rounded-xl mx-auto min-h-48 shadow-lg">
             <form className=" grid space-y-3 p-5 m-5 gap-3" onSubmit={handleFormSubmit}>
                 <input
                     className="bg-slate-100 border-2 border-slate-300 rounded-md p-1 shadow-inner"
@@ -53,6 +54,7 @@ export default function LoginForm() {
                     onChange={handleChange}
                 />
                 <button type="submit" className="mx-auto bg-slate-900 text-slate-100 w-28 h-14 rounded-md hover:bg-sky-600 shadow-xl">Submit</button>
+                <Link href="/signup" className="text-sky-900">Sign Up for an Account Here!</Link>
             </form>
         </div>
     )
