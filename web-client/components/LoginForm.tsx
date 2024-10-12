@@ -36,7 +36,7 @@ export default function LoginForm() {
         <div className="bg-slate-200 border-2 border-slate-300 rounded-xl mx-auto min-h-48 shadow-lg">
             <form className=" grid space-y-3 p-5 m-5 gap-3" onSubmit={handleFormSubmit}>
                 <input
-                    className="bg-slate-100 border-2 border-slate-300 rounded-md p-1 shadow-inner"
+                    className="bg-slate-100 border-2 border-slate-300 text-slate-600 rounded-md p-1 shadow-inner focus:border-sky-500 focus:text-slate-600"
                     id="email"
                     type="email"
                     name="email"
@@ -45,7 +45,7 @@ export default function LoginForm() {
                     onChange={handleChange}
                 />
                 <input
-                    className="bg-slate-100 border-2 border-slate-300 rounded-md p-1 shadow-inner"
+                    className="bg-slate-100 border-2 border-slate-300 text-slate-600 rounded-md p-1 shadow-inner focus:border-sky-500 focus:text-slate-600"
                     id="password"
                     type="password"
                     name="password"
@@ -53,8 +53,8 @@ export default function LoginForm() {
                     value={formData.password}
                     onChange={handleChange}
                 />
-                <button type="submit" className="mx-auto bg-slate-900 text-slate-100 w-28 h-14 rounded-md hover:bg-sky-600 shadow-xl">Submit</button>
-                <Link href="/signup" className="text-sky-900">Sign Up for an Account Here!</Link>
+                <button type="submit" className="mx-auto bg-slate-900 text-slate-100 w-28 h-14 rounded-md hover:bg-sky-600 shadow-md hover:shadow-slate-800">Submit</button>
+                <Link href="/signup" className="text-sky-900 hover:text-sky-600">Sign Up for an Account Here!</Link>
             </form>
         </div>
     )
