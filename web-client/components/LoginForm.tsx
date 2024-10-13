@@ -20,30 +20,9 @@ export default function LoginForm() {
     const handleFormSubmit = async (event: any) => {
         event.preventDefault();
 
-        // let token:any = authenticate(formData.email, formData.password)
-        // console.log(token)
-        const url = "http://localhost:8080/v1/login"
-        try {
-            const response = await fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: formData.email,
-                    password: formData.password
-                })
-            });
-            if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
-            }
-
-            const result = await response.json()
-            console.log(result)
-            // return result
-        } catch (error: any) {
-            console.error(error.message)
-        }
+        let result: { user_id: string, name: string, email:string, token: string, } = await authenticate(formData.email, formData.password)
+        console.log(result)
+        
 
         // clear form values
         setFormData({
