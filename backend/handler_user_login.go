@@ -9,6 +9,13 @@ import (
 
 // Handler for User Login
 func (cfg *apiConfig) handlerUserLogin(w http.ResponseWriter, r *http.Request) {
+	enableCors(w)
+
+	if r.Method == http.MethodOptions {
+        // Generally, return without doing anything further for OPTIONS
+        return
+    }
+	
 	type Params struct {
 		Email    string `json:"email"`
 		Password string `json:"password"`

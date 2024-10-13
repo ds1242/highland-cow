@@ -50,8 +50,8 @@ func main() {
 	mux.HandleFunc("GET /v1/err", errorHealthHandler)
 
 	// User Routes
+	mux.HandleFunc("POST /v1/login", cfg.handlerUserLogin)
 	mux.HandleFunc("POST /v1/users", cfg.handlerUsersCreate)
-	mux.HandleFunc("GET /v1/users", cfg.handlerUserLogin)
 	mux.HandleFunc("PUT /v1/users", cfg.middlewareAuth(cfg.handlerUserUpdate))
 	mux.HandleFunc("DELETE /v1/users", cfg.middlewareAuth(cfg.handlerUserDelete))
 
