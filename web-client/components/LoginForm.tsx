@@ -1,12 +1,13 @@
 'use client'
 import { useState } from "react"
 import Link from "next/link";
+import { authenticate } from "@/public/login";
 
 
 export default function LoginForm() {
     const [formData, setFormData] = useState({ email: '', password: '' });
 
-    const handleChange = (event:any) => {
+    const handleChange = (event: any) => {
         const { name, value } = event.target;
 
         setFormData({
@@ -16,14 +17,34 @@ export default function LoginForm() {
     };
 
     // submit form
-    const handleFormSubmit = async (event:any) => {
+    const handleFormSubmit = async (event: any) => {
         event.preventDefault();
 
+        // let token:any = authenticate(formData.email, formData.password)
+        // console.log(token)
+        const url = "http://localhost:8080/v1/login"
         try {
-            console.log(formData)
-        } catch (e) {
-            console.error(e)
-        };
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: formData.email,
+                    password: formData.password
+                })
+            });
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
+            const result = await response.json()
+            console.log(result)
+            // return result
+        } catch (error: any) {
+            console.error(error.message)
+        }
+
         // clear form values
         setFormData({
             email: '',
