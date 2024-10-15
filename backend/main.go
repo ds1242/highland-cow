@@ -9,6 +9,7 @@ import (
 
 	"github.com/ds1242/highland-cow/internal/database"
 	"github.com/joho/godotenv"
+	"github.com/rs/cors"
 	_ "github.com/lib/pq"
 )
 
@@ -50,8 +51,8 @@ func main() {
 	mux.HandleFunc("GET /v1/err", errorHealthHandler)
 
 	// User Routes
+	mux.HandleFunc("POST /v1/login", cfg.handlerUserLogin)
 	mux.HandleFunc("POST /v1/users", cfg.handlerUsersCreate)
-	mux.HandleFunc("GET /v1/users", cfg.handlerUserLogin)
 	mux.HandleFunc("PUT /v1/users", cfg.middlewareAuth(cfg.handlerUserUpdate))
 	mux.HandleFunc("DELETE /v1/users", cfg.middlewareAuth(cfg.handlerUserDelete))
 
@@ -63,9 +64,18 @@ func main() {
 	// User Scan Feed
 	mux.HandleFunc("GET /v1/user_scans", cfg.middlewareAuth(cfg.handlerGetUserScanList))
 
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"}, // Allow all origins, specify for production
+		AllowedMethods:   []string{"GET", "POST", "OPTIONS", "PUT", "DELETE"},
+		AllowedHeaders:   []string{"Content-Type", "Authorization"},
+		AllowCredentials: true,
+	})
+
+	handler := c.Handler(mux)
+
 	srv := &http.Server{
 		Addr:    ":" + port,
-		Handler: mux,
+		Handler: handler,
 	}
 
 	log.Printf("Serving on port: %s\n", port)
