@@ -6,9 +6,9 @@ import { Outlet } from 'react-router-dom'
 function App() {
 
   return (
-    <main className='mb-auto h-screen'>
+    <main className=''>
       <Header />
-      <div className="  bg-slate-400">
+      <div className="grid grid-cols-1 bg-slate-400">
         <Outlet />
       </div>
       <Footer />
