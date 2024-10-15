@@ -1,10 +1,10 @@
-'use client'
-import { useState } from "react"
-import Link from "next/link";
-import { authenticate } from "@/public/login";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { authenticate } from "../assets/login";
 
 
-export default function LoginForm() {
+
+const LoginForm = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
 
     const handleChange = (event: any) => {
@@ -54,8 +54,10 @@ export default function LoginForm() {
                     onChange={handleChange}
                 />
                 <button type="submit" className="mx-auto bg-slate-900 text-slate-100 w-28 h-14 rounded-md hover:bg-sky-600 shadow-md hover:shadow-slate-800">Submit</button>
-                <Link href="/signup" className="text-sky-900 hover:text-sky-600">Sign Up for an Account Here!</Link>
+                <Link to="/signup" className="text-sky-900 hover:text-sky-600">Sign Up for an Account Here!</Link>
             </form>
         </div>
     )
 }
+
+export default LoginForm;
