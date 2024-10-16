@@ -12,7 +12,7 @@ export async function authenticate(email: string, password: string):Promise<{ us
                 email: email,
                 password: password
             }),
-            credentials: "include",
+            // credentials: "include",
         });
         
         if (!response.ok) {
@@ -27,7 +27,6 @@ export async function authenticate(email: string, password: string):Promise<{ us
             token: result.token
         }
     } catch (error:any) {
-        console.error(error.message)
         throw error;
     }
 }
