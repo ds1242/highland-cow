@@ -6,6 +6,7 @@ import { authenticate } from "../assets/login";
 
 const LoginForm = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleChange = (event: any) => {
         const { name, value } = event.target;
@@ -14,21 +15,35 @@ const LoginForm = () => {
             ...formData,
             [name]: value
         });
+        setErrorMessage('');
     };
 
     // submit form
     const handleFormSubmit = async (event: any) => {
         event.preventDefault();
 
-        let result: { user_id: string, name: string, email:string, token: string, } = await authenticate(formData.email, formData.password)
-        console.log(result)
-        
+        try {
+            
+            let result:any = await authenticate(formData.email, formData.password)
 
-        // clear form values
-        setFormData({
-            email: '',
-            password: ''
-        });
+            if (result.error) {
+                setErrorMessage(result.error);
+            }
+            setFormData({
+                email: '',
+                password: ''
+            });
+            setErrorMessage('');
+            console.log(result)
+        } catch (error:any) {
+            console.error(error)
+            if (error.message == 'Response status: 400') {
+                setErrorMessage("User does not exists")
+            }
+            if (error.message == 'Response status: 403') {
+                setErrorMessage('Unable to log in')
+            }
+        }
     };
 
 
@@ -56,6 +71,7 @@ const LoginForm = () => {
                 <button type="submit" className="mx-auto bg-slate-900 text-slate-100 w-28 h-14 rounded-md hover:bg-sky-600 shadow-md hover:shadow-slate-800">Submit</button>
                 <Link to="/signup" className="text-sky-900 hover:text-sky-600">Sign Up for an Account Here!</Link>
             </form>
+            { errorMessage && <div> {errorMessage} </div>}
         </div>
     )
 }
