@@ -12,7 +12,7 @@ export async function authenticate(email: string, password: string):Promise<{ us
                 email: email,
                 password: password
             }),
-            credentials: "include",
+            // credentials: "include",
         });
         
         if (!response.ok) {
