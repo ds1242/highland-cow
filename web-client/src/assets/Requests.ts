@@ -1,7 +1,12 @@
 
+const domain = "https://localhost:8443"
+const version = "/v1"
+
+
 
 export async function authenticate(email: string, password: string):Promise<{token: string}> {
-    const url = "https://localhost:8443/v1/login"
+    const url = `${domain}${version}/login`;
+    
     try {
         const response = await fetch(url, {
             method: "POST",
