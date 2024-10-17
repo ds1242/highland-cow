@@ -48,7 +48,7 @@ const LoginForm = () => {
 
 
     return (
-        <div className="bg-slate-200 border-2 border-slate-300 rounded-xl mx-auto min-h-48 shadow-lg m-3">
+        <div className="bg-slate-200 border-2 border-slate-300 rounded-xl mx-auto min-h-48 max-w-80 shadow-lg m-3">
             <form className=" grid space-y-3 p-5 mt-5 mx-5 gap-3" onSubmit={handleFormSubmit}>
                 <input
                     className="bg-slate-100 border-2 border-slate-300 text-slate-600 rounded-md p-1 shadow-inner focus:border-sky-500 focus:text-slate-600 focus:outline-none"

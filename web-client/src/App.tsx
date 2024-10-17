@@ -6,11 +6,11 @@ import { Outlet } from 'react-router-dom'
 function App() {
 
   return (
-    <main className=''>
+    <main className='bg-slate-400 h-lvh grid grid-flow-row'>
       <Header />
-      <div className="grid grid-cols-1 bg-slate-400">
+      {/* <div className=""> */}
         <Outlet />
-      </div>
+      {/* </div> */}
       <Footer />
     </main>
   )
