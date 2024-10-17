@@ -2,3 +2,7 @@
 
 
 out
+
+# Ignore mkcert generated files
+*.pem
+*.key

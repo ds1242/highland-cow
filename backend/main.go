@@ -79,6 +79,6 @@ func main() {
 	}
 
 	log.Printf("Serving on port: %s\n", port)
-	log.Fatal(srv.ListenAndServe())
+	log.Fatal(srv.ListenAndServeTLS("./localhost+2.pem", "./localhost+2-key.pem"))
 
 }

@@ -1,7 +1,7 @@
 
 
-export async function authenticate(email: string, password: string):Promise<{ user_id: string, name: string, email: string, token: string}> {
-    const url = "http://localhost:8080/v1/login"
+export async function authenticate(email: string, password: string):Promise<{token: string}> {
+    const url = "https://localhost:8443/v1/login"
     try {
         const response = await fetch(url, {
             method: "POST",
@@ -21,9 +21,6 @@ export async function authenticate(email: string, password: string):Promise<{ us
 
         const result = await response.json()
         return {
-            user_id: result.user_id,
-            name: result.name,
-            email: result.email,
             token: result.token
         }
     } catch (error:any) {
