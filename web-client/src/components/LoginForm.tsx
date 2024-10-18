@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { authenticate } from "../assets/Requests";
+import { authenticate } from "../assets/requestUtils";
+import auth from '../assets/auth'
 
 
 
@@ -34,7 +35,8 @@ const LoginForm = () => {
                 password: ''
             });
             setErrorMessage('');
-            console.log(result)
+            auth.login(result.token)
+            
         } catch (error:any) {
             console.error(error)
             if (error.message == 'Response status: 400') {
