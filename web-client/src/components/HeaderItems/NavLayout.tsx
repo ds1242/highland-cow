@@ -4,7 +4,7 @@ import AuthService from '../../assets/auth'
 
 export default function NavLayout() {
 
-    const logout = (event:any) => {
+    const logout = (event: any) => {
         event.preventDefault()
         AuthService.logout()
     }
@@ -38,9 +38,7 @@ export default function NavLayout() {
 
     return (
         <nav className="bg-slate-700 grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2">
-            <div className="grow">
-                <NavBrand />
-            </div>
+            <NavBrand />
             <div className="flex justify-center md:justify-end md:align-middle" >
                 {!loggedIn ? loggedOutArr.map(function (link) {
                     return (
