@@ -56,8 +56,9 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 		RespondWithError(w, http.StatusUnauthorized, err.Error())
 		return
 	}
+	
 	convertedUser := databaseUserToUser(newUser)
-	userResponse := createUserResponse(convertedUser, token)
+	userResponse := createLoginResponse(convertedUser, token)
 
 	RespondWithJSON(w, http.StatusCreated, userResponse)
 }
