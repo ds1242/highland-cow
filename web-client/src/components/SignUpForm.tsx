@@ -2,6 +2,9 @@
 
 export default function SignUpForm() {
     return (
-        <div>sign up</div>
+        <>
+            <h1 className="flex justify-center text-4xl text-sky-900 py-2">Welcome!</h1>
+            <div>sign up</div>
+        </>
     )
 }
