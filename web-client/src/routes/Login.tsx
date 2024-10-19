@@ -36,7 +36,7 @@ function Login() {
                 password: ''
             });
             setErrorMessage('');
-            
+
             login(result.token)
 
             navigate(`/dashboard/${result.user_id}`)
@@ -53,11 +53,11 @@ function Login() {
     };
     return (
         <div className="bg-neutral-two h-full content-start py-3 lg:py-0">
-            <h1 className="flex justify-center text-4xl text-sky-900 py-2">Welcome!</h1>
+            <h1 className="flex justify-center text-4xl text-brand py-2">Welcome!</h1>
             <div className="bg-slate-200 border-2 border-slate-300 rounded-xl mx-auto min-h-48 max-w-80 shadow-lg m-3">
                 <form className=" grid space-y-3 p-5 mt-5 mx-5 gap-3" onSubmit={handleFormSubmit}>
                     <input
-                        className="bg-slate-100 border-2 border-slate-300 text-slate-600 rounded-md p-1 shadow-inner focus:border-sky-500 focus:text-slate-600 focus:outline-none"
+                        className="bg-slate-100 border-2 border-slate-300 text-slate-600 rounded-md p-1 shadow-inner focus:border-brand focus:text-slate-600 focus:outline-none"
                         id="email"
                         type="email"
                         name="email"
@@ -66,7 +66,7 @@ function Login() {
                         onChange={handleChange}
                     />
                     <input
-                        className="bg-slate-100 border-2 border-slate-300 text-slate-600 rounded-md p-1 shadow-inner focus:border-sky-500 focus:text-slate-600 focus:outline-none"
+                        className="bg-slate-100 border-2 border-slate-300 text-slate-600 rounded-md p-1 shadow-inner focus:border-brand focus:text-slate-600 focus:outline-none"
                         id="password"
                         type="password"
                         name="password"
