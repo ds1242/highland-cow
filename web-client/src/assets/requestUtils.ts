@@ -32,3 +32,33 @@ export async function authenticate(email: string, password: string):Promise<{tok
         throw error;
     }
 }
+
+export async function signup(name: string, email: string, password: string):Promise<{token: string}> {
+    const url = `${domain}${version}/users`;
+    
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                password: password
+            }),
+            // credentials: "include",
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        const result = await response.json()
+        return {
+            token: result.token
+        }
+    } catch (error:any) {
+        throw error;
+    }
+}

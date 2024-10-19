@@ -37,7 +37,7 @@ function Login() {
             });
             setErrorMessage('');
             login(result.token)
-            
+
             navigate('/dashboard')
 
         } catch (error: any) {
@@ -74,7 +74,7 @@ function Login() {
                         onChange={handleChange}
                     />
                     <button type="submit" className="mx-auto bg-slate-900 text-slate-100 w-28 h-14 rounded-md hover:bg-sky-600 shadow-md shadow-slate-400 hover:shadow-slate-800">Submit</button>
-                    <Link to="/signup" className="text-sky-900 hover:text-sky-600">Sign Up for an Account Here!</Link>
+                    <Link to="/signup" className="text-sm text-center text-sky-900 hover:text-sky-600">Sign Up for an Account Here!</Link>
                 </form>
                 {errorMessage && <div className="flex flex-row justify-center pb-3 text-red-500 italic"> {errorMessage} </div>}
             </div>
