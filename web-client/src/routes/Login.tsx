@@ -37,7 +37,7 @@ function Login() {
             });
             setErrorMessage('');
             login(result.token)
-            console.log(result.token)
+            
             navigate('/dashboard')
 
         } catch (error: any) {
