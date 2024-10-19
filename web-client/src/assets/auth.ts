@@ -8,7 +8,7 @@ class AuthService {
         return !!token && !this.isTokenExpired(token);
     }
 
-    private isTokenExpired(token: string): boolean {
+    public isTokenExpired(token: string): boolean {
         try {
             const decoded = jwtDecode<JwtPayload>(token);
             if (decoded.exp === undefined) {
@@ -16,22 +16,21 @@ class AuthService {
             }
             return decoded.exp < Date.now() / 1000;
         } catch (err) {
-            return false;
+            return true;
         }
     }
 
-    private getToken() {
+    public getToken() {
         return localStorage.getItem('id_token');
     }
 
     public login(idToken: string) {
         localStorage.setItem('id_token', idToken);
-        window.location.assign('/');
+        // window.location.assign('/');
     }
 
     public logout() {
         localStorage.removeItem('id_token');
-        window.location.assign('/');
     }
 }
 
