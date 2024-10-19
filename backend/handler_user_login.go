@@ -45,9 +45,10 @@ func (cfg *apiConfig) handlerUserLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	
+	// convert queried DB user to a struct user
+	convertedUser := databaseUserToUser(user)
 	// create userResponse to display information
-	loginResponse := createLoginResponse(token)
+	userResponse := createLoginResponse(convertedUser, token)
 	// Response
-	RespondWithJSON(w, http.StatusOK, loginResponse)
+	RespondWithJSON(w, http.StatusOK, userResponse)
 }
