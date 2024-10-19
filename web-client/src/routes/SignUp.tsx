@@ -47,9 +47,9 @@ function SignUp() {
     }
 
     return (
-        <div className="bg-slate-400 h-full content-start py-3 lg:py-0">
-            <h1 className="flex justify-center text-4xl text-sky-900 py-2">Welcome!</h1>
-            <div className="flex justify-center text-sky-900 py-2">Please enter your email and password to signup!</div>
+        <div className="bg-neutral-two h-full content-start py-3 lg:py-0">
+            <h1 className="flex justify-center text-4xl text-brand py-2">Welcome!</h1>
+            <div className="flex justify-center text-brand py-2">Please enter your email and password to signup!</div>
             <div className="bg-slate-200 border-2 border-slate-300 rounded-xl mx-auto min-h-48 max-w-80 shadow-lg m-3">
                 <form className=" grid space-y-3 p-5 mt-5 mx-5 gap-3" onSubmit={handleSignUpSubmit}>
                     <input
@@ -79,8 +79,8 @@ function SignUp() {
                         value={formData.password}
                         onChange={handleChange}
                     />
-                    <button type="submit" className="mx-auto bg-slate-900 text-slate-100 w-28 h-14 rounded-md hover:bg-sky-600 shadow-md shadow-slate-400 hover:shadow-slate-800">Submit</button>
-                    <Link to="/login" className="text-sm text-center text-sky-900 hover:text-sky-600">Already have a account, login here!</Link>
+                    <button type="submit" className="mx-auto bg-brand text-slate-100 w-28 h-14 rounded-md hover:bg-accent-two shadow-md shadow-slate-400 hover:shadow-slate-800">Submit</button>
+                    <Link to="/login" className="text-sm text-center text-brand hover:text-accent-two">Already have a account, login here!</Link>
                 </form>
                 {errorMessage && <div className="flex flex-row justify-center pb-3 text-red-500 italic"> {errorMessage} </div>}
             </div>

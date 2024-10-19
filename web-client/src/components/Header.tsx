@@ -4,7 +4,7 @@ import NavLayout from "./HeaderItems/NavLayout";
 
 export default function Header() {
     return (
-        <div className="bg-slate-400">
+        <div className="bg-neutral-two">
             <NavLayout />
             <HeaderWave />
         </div>

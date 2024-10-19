@@ -36,7 +36,7 @@ function Login() {
                 password: ''
             });
             setErrorMessage('');
-            console.log(result)
+            
             login(result.token)
 
             navigate(`/dashboard/${result.user_id}`)
@@ -52,7 +52,7 @@ function Login() {
         }
     };
     return (
-        <div className="bg-slate-400 h-full content-start py-3 lg:py-0">
+        <div className="bg-neutral-two h-full content-start py-3 lg:py-0">
             <h1 className="flex justify-center text-4xl text-sky-900 py-2">Welcome!</h1>
             <div className="bg-slate-200 border-2 border-slate-300 rounded-xl mx-auto min-h-48 max-w-80 shadow-lg m-3">
                 <form className=" grid space-y-3 p-5 mt-5 mx-5 gap-3" onSubmit={handleFormSubmit}>
