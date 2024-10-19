@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavBrand from "./NavBrand";
 import { useAuth } from "../../AuthProvider";
 
@@ -6,6 +6,12 @@ import { useAuth } from "../../AuthProvider";
 
 export default function NavLayout() {
     const { loggedIn, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
 
     interface SiteLink {
         url: string;
@@ -37,7 +43,7 @@ export default function NavLayout() {
                 {loggedIn ? (
                     loggedInArr.map((link, index) => (
                         <div className="content-center text-sky-400 text-2xl md:text-2xl mx-3 hover:text-sky-100 ease-in" key={index}>
-                            <button className="bg-slate-900 p-3" onClick={logout}>
+                            <button className="bg-slate-900 p-3" onClick={handleLogout}>
                                 {link.linkTitle}
                             </button>
                         </div>

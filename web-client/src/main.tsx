@@ -9,7 +9,7 @@ import Index from './routes/Index.tsx'
 import Dashboard from './routes/Dashboard.tsx'
 import ErrorPage from './error-page.tsx'
 import { AuthProvider } from './AuthProvider.tsx'
-import { useAuth } from './AuthProvider.tsx'
+// import { useAuth } from './AuthProvider.tsx'
 
 import './index.css'
 

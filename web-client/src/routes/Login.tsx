@@ -1,40 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { authenticate } from "../assets/requestUtils";
-// import auth from '../assets/auth'
 import { useState } from "react";
 import { useAuth } from "../AuthProvider";
-// interface LoginInfo {
-//     email: string;
-//     password: string;
-// }
 
-// interface AuthResult {
-//     token: string;
-//     // Add any other fields you expect from the authenticate response
-// }
 
-// export async function action({ request }: { request: Request }) {
-//     const formData = await request.formData();
-//     const loginInfo: LoginInfo = Object.fromEntries(formData) as unknown as LoginInfo;
-//     const { login } = useAuth();
-//     try {
-
-//         const result: AuthResult = await authenticate(loginInfo.email, loginInfo.password)
-//         login(result.token)
-//         return redirect(`/dashboard`)
-//     } catch (error: any) {
-//         if (error.message == 'Response status: 400') {
-//             return { error: `User does not exist, please sign up` }
-//         }
-//         if (error.message == 'Response status: 403') {
-//             return { error: "Unable to login" }
-//         }
-//         return { error: "An unexpected error occurred." };
-//     }
-// }
 function Login() {
-    // const actionData = useActionData();
-    // const error = (actionData as { error?: string })?.error;
     const navigate = useNavigate();
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [errorMessage, setErrorMessage] = useState('');
