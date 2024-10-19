@@ -1,0 +1,11 @@
+{
+    "name": "highland_cow",
+    "private": true,
+    "version": "0.0.0",
+    "scripts": {
+        "dev": "concurrently \"cd backend && go build -o out && ./out\" \"cd web-client && npm run dev\""
+    },
+    "devDependencies": {
+        "concurrently": "^9.0.1"
+    }
+}
