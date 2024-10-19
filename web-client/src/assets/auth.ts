@@ -2,6 +2,19 @@ import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 
 class AuthService {
+    public getId():string | null {
+        const token = this.getToken();
+        if (!token) {
+            return null;
+        }
+        try {
+            const decoded = jwtDecode<JwtPayload>(token);
+            return decoded.sub ?? null; // Return user ID or null if undefined
+        } catch (err) {
+            console.error("Failed to decode token:", err);
+            return null; // Return null if decoding fails
+        }
+    }
 
     public loggedIn(): boolean {
         const token = this.getToken();
