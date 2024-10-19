@@ -4,7 +4,7 @@ const version = "/v1"
 
 
 
-export async function authenticate(email: string, password: string):Promise<{token: string}> {
+export async function authenticate(email: string, password: string):Promise<{token: string, user_id: string}> {
     const url = `${domain}${version}/login`;
     
     try {
@@ -26,14 +26,15 @@ export async function authenticate(email: string, password: string):Promise<{tok
 
         const result = await response.json()
         return {
-            token: result.token
+            token: result.token,
+            user_id: result.user_id
         }
     } catch (error:any) {
         throw error;
     }
 }
 
-export async function signup(name: string, email: string, password: string):Promise<{token: string}> {
+export async function signup(name: string, email: string, password: string):Promise<{token: string, user_id: string}> {
     const url = `${domain}${version}/users`;
     
     try {
@@ -56,7 +57,8 @@ export async function signup(name: string, email: string, password: string):Prom
 
         const result = await response.json()
         return {
-            token: result.token
+            token: result.token,
+            user_id: result.user_id
         }
     } catch (error:any) {
         throw error;

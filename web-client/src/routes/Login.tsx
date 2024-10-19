@@ -36,9 +36,10 @@ function Login() {
                 password: ''
             });
             setErrorMessage('');
+            console.log(result)
             login(result.token)
 
-            navigate('/dashboard')
+            navigate(`/dashboard/${result.user_id}`)
 
         } catch (error: any) {
             console.error(error)

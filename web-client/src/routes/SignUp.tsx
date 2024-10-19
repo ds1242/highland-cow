@@ -35,9 +35,9 @@ function SignUp() {
                 password: '',
             });
             setErrorMessage('');
-            // console.log(result.token)
+            
             login(result.token)
-            navigate('/dashboard')
+            navigate(`/dashboard/${result.user_id}`)
 
         } catch (error:any) {
             if (error.message == 'Response status: 500') {
