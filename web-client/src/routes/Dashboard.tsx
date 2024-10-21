@@ -1,13 +1,13 @@
 // import auth from '../assets/auth'
 // import Dashboard from './Dashboard';
-// import { useAuth } from '../AuthProvider';
+import { useAuth } from '../AuthProvider';
 // import { redirect, useNavigate } from 'react-router-dom';
 // import Login from './Login';
 // import { useState, useEffect } from 'react';
 
 export default function Dashboard() {
     // const navigate = useNavigate();
-    // const loggedIn = useAuth();
+    const { loggedIn } = useAuth();
     // const [userId, setUserId] = useState<string | null>(null);
 
     // useEffect(() => {

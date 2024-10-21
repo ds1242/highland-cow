@@ -11,10 +11,13 @@ import Dashboard from './Dashboard';
 
 
 export default function Index() {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const { loggedIn } = useAuth();
-    const [userId, setUserId] = useState<string | null>(null);
 
+    const goToDash =() => {
+        let user_id = auth.getId();
+        navigate(`/dashboard/${user_id}`)
+    }
 
     return (
         <>
@@ -24,11 +27,11 @@ export default function Index() {
             </div>
             <div className='flex flex-row justify-center'>
                 {loggedIn ? 
-                <Link to={`/dashboard/${userId}`} className='content-center text-slate-100 text-2xl md:text-2xl mx-3 hover:text-sky-100 ease-in'>
+                <div onClick={goToDash} className='content-center text-slate-100 text-2xl md:text-2xl mx-3 hover:text-sky-100 ease-in'>
                 <button className='bg-slate-900 hover:bg-sky-600 shadow-md shadow-slate-400 rounded-md p-3'>
                 Dashboard
                     </button>
-                </Link>
+                </div>
                 :
                 <Link to="/login" className='content-center text-slate-100 text-2xl md:text-2xl mx-3 hover:text-sky-100 ease-in'>
                     <button className='bg-slate-900 hover:bg-sky-600 shadow-md shadow-slate-400 rounded-md p-3'>
