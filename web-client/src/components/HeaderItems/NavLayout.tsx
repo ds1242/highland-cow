@@ -20,6 +20,11 @@ export default function NavLayout() {
         navigate(`/dashboard/${user_id}`)
     }
 
+    const handleGoToProfile = () => {
+        let user_id = auth.getId();
+        navigate(`/profile/${user_id}`)
+    }
+
     interface SiteLink {
         url: string;
         linkTitle: string;
@@ -43,20 +48,24 @@ export default function NavLayout() {
 
     const loggedInArr: Array<LoggedInSiteLink> = [
         {
+            linkTitle: "Dashboard",
+            handleClick: handleGoToDash,
+        },
+        {
+            linkTitle: "Profile",
+            handleClick: handleGoToProfile,
+        },
+        {
             linkTitle: "Log Out",
             handleClick: handleLogout
         },
-        {
-            linkTitle: "Dashboard",
-            handleClick: handleGoToDash,
-        }
 
     ];
 
     return (
         <nav className="bg-neutral-one grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2">
             <NavBrand />
-            <div className="flex justify-center md:justify-end md:align-middle">
+            <div className="flex justify-center gap-2 flex-wrap md:justify-end md:align-middle">
                 {loggedIn ? (
                     loggedInArr.map((link, index) => (
                         <div className="content-center text-slate-100 text-2xl md:text-2xl mx-3 hover:text-sky-100 ease-in" key={index}>

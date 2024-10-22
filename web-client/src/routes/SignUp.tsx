@@ -79,8 +79,8 @@ function SignUp() {
                         value={formData.password}
                         onChange={handleChange}
                     />
-                    <button type="submit" className="mx-auto bg-brand text-slate-100 w-28 h-14 rounded-md hover:bg-accent-two shadow-md shadow-slate-400 hover:shadow-slate-800">Submit</button>
-                    <Link to="/login" className="text-sm text-center text-brand hover:text-accent-two">Already have a account, login here!</Link>
+                    <button type="submit" className="mx-auto bg-brand text-slate-100 w-28 h-14 rounded-md hover:bg-sky-600 shadow-md shadow-slate-400 hover:shadow-slate-800">Submit</button>
+                    <Link to="/login" className="text-sm text-center text-brand hover:text-sky-600">Already have a account, login here!</Link>
                 </form>
                 {errorMessage && <div className="flex flex-row justify-center pb-3 text-red-500 italic"> {errorMessage} </div>}
             </div>
