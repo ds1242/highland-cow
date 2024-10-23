@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import auth from "../assets/auth";
 import { useAuth } from "../AuthProvider";
-import { redirect } from "react-router-dom";
 
 const domain = "https://localhost:8443"
 const version = "/v1"
@@ -55,9 +54,7 @@ export default function Profile() {
         )
     }
 
-    if (!loggedIn) {
-        window.location.replace('/login');
-    }
+    if (!loggedIn) { }
     console.log(data)
     return (
         <div>
