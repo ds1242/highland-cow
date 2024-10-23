@@ -37,13 +37,18 @@ const router = createBrowserRouter([
         element: <SignUp />
       },
       {
-        path: "dashboard/:userId",
-        element: <Dashboard />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "dashboard/:userId",
+            element: <Dashboard />,
+          },
+          {
+            path: "profile/:userId",
+            element: <Profile />,
+          },
+        ]
       },
-      {
-        path: "profile/:userId",
-        element: <Profile />,
-      }
     ]
   },
 ])
