@@ -53,11 +53,10 @@ export default function Profile() {
         )
     }
 
-
+    console.log(data)
     return (
         <div>
-            <p>Data Loaded</p>
-            <pre>{JSON.stringify(data)} </pre>
+            <h1>Welcome {data?.name} </h1>
         </div>
 
     )
