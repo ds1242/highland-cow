@@ -10,6 +10,7 @@ import Dashboard from './routes/Dashboard.tsx'
 import ErrorPage from './error-page.tsx'
 import { AuthProvider } from './AuthProvider.tsx'
 // import { useAuth } from './AuthProvider.tsx'
+import Profile from './routes/Profile.tsx'
 
 import './index.css'
 
@@ -23,9 +24,9 @@ const router = createBrowserRouter([
     // loader: indexLoader,
     errorElement: <ErrorPage />,
     children: [
-      { 
-        index: true, 
-        element: <Index />, 
+      {
+        index: true,
+        element: <Index />,
       },
       {
         path: "login",
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "dashboard/:userId",
         element: <Dashboard />,
+      },
+      {
+        path: "profile/:userId",
+        element: <Profile />,
       }
     ]
   },

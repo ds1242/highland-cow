@@ -9,8 +9,8 @@ import (
 
 	"github.com/ds1242/highland-cow/internal/database"
 	"github.com/joho/godotenv"
-	"github.com/rs/cors"
 	_ "github.com/lib/pq"
+	"github.com/rs/cors"
 )
 
 type apiConfig struct {
@@ -55,6 +55,7 @@ func main() {
 	mux.HandleFunc("POST /v1/users", cfg.handlerUsersCreate)
 	mux.HandleFunc("PUT /v1/users", cfg.middlewareAuth(cfg.handlerUserUpdate))
 	mux.HandleFunc("DELETE /v1/users", cfg.middlewareAuth(cfg.handlerUserDelete))
+	mux.HandleFunc("GET /v1/users", cfg.middlewareAuth(cfg.handlerGetUser))
 
 	// Product Routes
 	mux.HandleFunc("POST /v1/scan_product", cfg.middlewareAuth(cfg.handlerScanProduct))
@@ -65,7 +66,7 @@ func main() {
 	mux.HandleFunc("GET /v1/user_scans", cfg.middlewareAuth(cfg.handlerGetUserScanList))
 
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"*"}, // Allow all origins, specify for production
+		AllowedOrigins:   []string{"http://localhost:5173"}, // Allow all origins, specify for production
 		AllowedMethods:   []string{"GET", "POST", "OPTIONS", "PUT", "DELETE"},
 		AllowedHeaders:   []string{"Content-Type", "Authorization"},
 		AllowCredentials: true,
