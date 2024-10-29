@@ -11,6 +11,8 @@ import ErrorPage from './error-page.tsx'
 import { AuthProvider } from './AuthProvider.tsx'
 // import { useAuth } from './AuthProvider.tsx'
 import Profile from './routes/Profile.tsx'
+import ProtectedRoute from './components/ProtectedRoute.tsx'
+
 
 import './index.css'
 
@@ -37,13 +39,18 @@ const router = createBrowserRouter([
         element: <SignUp />
       },
       {
-        path: "dashboard/:userId",
-        element: <Dashboard />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "dashboard/:userId",
+            element: <Dashboard />,
+          },
+          {
+            path: "profile/:userId",
+            element: <Profile />,
+          },
+        ]
       },
-      {
-        path: "profile/:userId",
-        element: <Profile />,
-      }
     ]
   },
 ])
