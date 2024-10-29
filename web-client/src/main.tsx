@@ -11,6 +11,8 @@ import ErrorPage from './error-page.tsx'
 import { AuthProvider } from './AuthProvider.tsx'
 // import { useAuth } from './AuthProvider.tsx'
 import Profile from './routes/Profile.tsx'
+import ProtectedRoute from './components/ProtectedRoute.tsx'
+
 
 import './index.css'
 
