@@ -4,9 +4,9 @@ const version = "/v1"
 
 
 
-export async function authenticate(email: string, password: string):Promise<{token: string, user_id: string}> {
+export async function authenticate(email: string, password: string): Promise<{ token: string, user_id: string }> {
     const url = `${domain}${version}/login`;
-    
+
     try {
         const response = await fetch(url, {
             method: "POST",
@@ -19,7 +19,7 @@ export async function authenticate(email: string, password: string):Promise<{tok
             }),
             // credentials: "include",
         });
-        
+
         if (!response.ok) {
             throw new Error(`Response status: ${response.status}`);
         }
@@ -29,14 +29,14 @@ export async function authenticate(email: string, password: string):Promise<{tok
             token: result.token,
             user_id: result.user_id
         }
-    } catch (error:any) {
+    } catch (error: any) {
         throw error;
     }
 }
 
-export async function signup(name: string, email: string, password: string):Promise<{token: string, user_id: string}> {
+export async function signup(name: string, email: string, password: string): Promise<{ token: string, user_id: string }> {
     const url = `${domain}${version}/users`;
-    
+
     try {
         const response = await fetch(url, {
             method: "POST",
@@ -50,7 +50,7 @@ export async function signup(name: string, email: string, password: string):Prom
             }),
             // credentials: "include",
         });
-        
+
         if (!response.ok) {
             throw new Error(`Response status: ${response.status}`);
         }
@@ -60,7 +60,40 @@ export async function signup(name: string, email: string, password: string):Prom
             token: result.token,
             user_id: result.user_id
         }
-    } catch (error:any) {
+    } catch (error: any) {
+        throw error;
+    }
+}
+
+
+export async function updateUser(name: string, email: string, password: string): Promise<{ token: string, user_id: string }> {
+    const url = `${domain}${version}/users`;
+    const params = {}
+    try {
+        const response = await fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                password: password
+            }),
+            // credentials: "include",
+        });
+
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+
+        const result = await response.json()
+        return {
+            token: result.token,
+            user_id: result.user_id
+        }
+    } catch (error: any) {
         throw error;
     }
 }
