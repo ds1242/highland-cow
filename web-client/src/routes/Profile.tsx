@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import auth from "../assets/auth";
+import { updateUser } from "../assets/requestUtils";
 
 const domain = "https://localhost:8443"
 const version = "/v1"
@@ -72,7 +73,7 @@ export default function Profile() {
 
         try {
 
-            let result: any = await authenticate(formData.email, formData.password)
+            let result: any = await updateUser(token, formData.name, formData.email, formData.password)
 
             if (result.error) {
                 setErrorMessage(result.error);

@@ -66,11 +66,11 @@ export async function signup(name: string, email: string, password: string): Pro
 }
 
 
-export async function updateUser(name: string, email: string, password: string): Promise<{ token: string, user_id: string }> {
+export async function updateUser(token: string, name: string, email: string, password: string): Promise<{ token: string, user_id: string }> {
     const url = `${domain}${version}/users`;
     const params = {}
 
-    if (email?.trm()) {
+    if (email?.trim()) {
         params.email = email;
     }
     if (name?.trim()) {
@@ -79,12 +79,13 @@ export async function updateUser(name: string, email: string, password: string):
     if (password?.trim()) {
         params.password = password;
     }
-
+    console.log(params)
     try {
         const response = await fetch(url, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
             },
             body: JSON.stringify(params),
             // credentials: "include",
