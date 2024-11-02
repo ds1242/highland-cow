@@ -98,11 +98,15 @@ export default function Profile() {
         }
     }
 
+    const deleteProfile = async (event: any) => {
+        event.preventDefault();
+        console.log("Delete");
+    }
     return (
-        <div className="h-full">
+        <div className="h-full my-3">
             <div className="bg-neutral-two content-start py-3 lg:py-0">
                 <h1 className="flex justify-center text-4xl text-brand py-2">Welcome {data?.name}!</h1>
-                <p className="flex justify-center text-brand py-1 px-1">If you would like to update any of your information please use the fields below</p>
+                <p className="flex justify-center text-center text-brand py-1 px-1">If you would like to update any of your information please use the fields below</p>
                 <div className="bg-slate-200 border-2 border-slate-300 rounded-xl mx-auto min-h-48 max-w-80 shadow-lg m-3">
                     <form className=" grid space-y-3 p-5 mt-5 mx-5 gap-3" onSubmit={handleFormSubmit}>
                         <label className="text-brand">
@@ -146,8 +150,9 @@ export default function Profile() {
                     {errorMessage && <div className="flex flex-row justify-center pb-3 text-red-500 italic"> {errorMessage} </div>}
                 </div>
             </div>
-
-            <button className="mx-auto bg-red-700 text-slate-100 w-28 h-14 rounded-md hover:bg-red-600 hover:shadow-md shadow-slate-400 hover:shadow-slate-800 py-3 my-2">Delete Profile</button>
+            <div className="flex justify-center">
+                <button className="mx-auto bg-red-700 text-slate-100 w-28 h-14 rounded-md hover:bg-red-600 hover:shadow-md shadow-slate-400 hover:shadow-slate-800 py-3 my-2" onClick={deleteProfile}>Delete Profile</button>
+            </div>
         </div>
 
     )
