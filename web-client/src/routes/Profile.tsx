@@ -84,7 +84,7 @@ export default function Profile() {
                 name: '',
             });
             setErrorMessage('');
-
+            fetchData();
 
 
         } catch (error: any) {
@@ -99,52 +99,55 @@ export default function Profile() {
     }
 
     return (
-
-        <div className="bg-neutral-two h-full content-start py-3 lg:py-0">
-            <h1 className="flex justify-center text-4xl text-brand py-2">Welcome {data?.name}!</h1>
-            <p className="flex justify-center text-brand py-1 px-1">If you would like to update any of your information please use the fields below</p>
-            <div className="bg-slate-200 border-2 border-slate-300 rounded-xl mx-auto min-h-48 max-w-80 shadow-lg m-3">
-                <form className=" grid space-y-3 p-5 mt-5 mx-5 gap-3" onSubmit={handleFormSubmit}>
-                    <label className="text-brand">
-                        Name:
-                        <input
-                            className="bg-slate-100 border-2 border-slate-300 text-slate-600 rounded-md p-1 shadow-inner focus:border-brand focus:text-slate-600 focus:outline-none"
-                            id="name"
-                            type="name"
-                            name="name"
-                            placeholder="Please update your name..."
-                            value={formData.name}
-                            onChange={handleChange}
-                        />
-                    </label>
-                    <label className="text-brand">
-                        Email:
-                        <input
-                            className="bg-slate-100 border-2 border-slate-300 text-slate-600 rounded-md p-1 shadow-inner focus:border-brand focus:text-slate-600 focus:outline-none"
-                            id="email"
-                            type="email"
-                            name="email"
-                            placeholder="Please enter your email..."
-                            value={formData.email}
-                            onChange={handleChange}
-                        />
-                    </label>
-                    <label>
-                        Passsword
-                        <input
-                            className="bg-slate-100 border-2 border-slate-300 text-slate-600 rounded-md p-1 shadow-inner focus:border-brand focus:text-slate-600 focus:outline-none"
-                            id="password"
-                            type="password"
-                            name="password"
-                            placeholder="Please enter your password..."
-                            value={formData.password}
-                            onChange={handleChange}
-                        />
-                    </label>
-                    <button type="submit" className="mx-auto bg-slate-900 text-slate-100 w-28 h-14 rounded-md hover:bg-sky-600 shadow-md shadow-slate-400 hover:shadow-slate-800">Submit</button>
-                </form>
-                {errorMessage && <div className="flex flex-row justify-center pb-3 text-red-500 italic"> {errorMessage} </div>}
+        <div className="h-full">
+            <div className="bg-neutral-two content-start py-3 lg:py-0">
+                <h1 className="flex justify-center text-4xl text-brand py-2">Welcome {data?.name}!</h1>
+                <p className="flex justify-center text-brand py-1 px-1">If you would like to update any of your information please use the fields below</p>
+                <div className="bg-slate-200 border-2 border-slate-300 rounded-xl mx-auto min-h-48 max-w-80 shadow-lg m-3">
+                    <form className=" grid space-y-3 p-5 mt-5 mx-5 gap-3" onSubmit={handleFormSubmit}>
+                        <label className="text-brand">
+                            Name:
+                            <input
+                                className="bg-slate-100 border-2 border-slate-300 text-slate-600 rounded-md p-1 shadow-inner focus:border-brand focus:text-slate-600 focus:outline-none"
+                                id="name"
+                                type="name"
+                                name="name"
+                                placeholder="Please update your name..."
+                                value={formData.name}
+                                onChange={handleChange}
+                            />
+                        </label>
+                        <label className="text-brand">
+                            Email:
+                            <input
+                                className="bg-slate-100 border-2 border-slate-300 text-slate-600 rounded-md p-1 shadow-inner focus:border-brand focus:text-slate-600 focus:outline-none"
+                                id="email"
+                                type="email"
+                                name="email"
+                                placeholder="Please enter your email..."
+                                value={formData.email}
+                                onChange={handleChange}
+                            />
+                        </label>
+                        <label>
+                            Passsword
+                            <input
+                                className="bg-slate-100 border-2 border-slate-300 text-slate-600 rounded-md p-1 shadow-inner focus:border-brand focus:text-slate-600 focus:outline-none"
+                                id="password"
+                                type="password"
+                                name="password"
+                                placeholder="Please enter your password..."
+                                value={formData.password}
+                                onChange={handleChange}
+                            />
+                        </label>
+                        <button type="submit" className="mx-auto bg-slate-900 text-slate-100 w-28 h-14 rounded-md hover:bg-sky-600 shadow-md shadow-slate-400 hover:shadow-slate-800">Submit</button>
+                    </form>
+                    {errorMessage && <div className="flex flex-row justify-center pb-3 text-red-500 italic"> {errorMessage} </div>}
+                </div>
             </div>
+
+            <button className="mx-auto bg-red-700 text-slate-100 w-28 h-14 rounded-md hover:bg-red-600 hover:shadow-md shadow-slate-400 hover:shadow-slate-800 py-3 my-2">Delete Profile</button>
         </div>
 
     )

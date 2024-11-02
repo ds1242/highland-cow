@@ -79,7 +79,7 @@ export async function updateUser(token: string, name: string, email: string, pas
     if (password?.trim()) {
         params.password = password;
     }
-    console.log(params)
+
     try {
         const response = await fetch(url, {
             method: "PUT",
