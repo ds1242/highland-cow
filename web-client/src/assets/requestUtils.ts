@@ -69,17 +69,24 @@ export async function signup(name: string, email: string, password: string): Pro
 export async function updateUser(name: string, email: string, password: string): Promise<{ token: string, user_id: string }> {
     const url = `${domain}${version}/users`;
     const params = {}
+
+    if (email?.trm()) {
+        params.email = email;
+    }
+    if (name?.trim()) {
+        params.name = name;
+    }
+    if (password?.trim()) {
+        params.password = password;
+    }
+
     try {
         const response = await fetch(url, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                name: name,
-                email: email,
-                password: password
-            }),
+            body: JSON.stringify(params),
             // credentials: "include",
         });
 
