@@ -105,3 +105,21 @@ export async function updateUser(token: string, name: string, email: string, pas
         throw error;
     }
 }
+
+export async function deleteUser(token: string) {
+
+    const url = `${domain}${version}/users`;
+    const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+    }
+
+    const result = await response.json()
+    return result
+}

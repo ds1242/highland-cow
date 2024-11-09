@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import auth from "../assets/auth";
-import { updateUser } from "../assets/requestUtils";
+import { deleteUser, updateUser } from "../assets/requestUtils";
+import { redirect } from "react-router-dom";
 
 const domain = "https://localhost:8443"
 const version = "/v1"
@@ -100,7 +101,13 @@ export default function Profile() {
 
     const deleteProfile = async (event: any) => {
         event.preventDefault();
+
+        let result: any = await deleteUser(token);
+
+        console.log(result);
         console.log("Delete");
+
+        redirect("/");
     }
     return (
         <div className="h-full my-3">
