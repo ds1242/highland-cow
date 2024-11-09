@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import auth from "../assets/auth";
-import { updateUser } from "../assets/requestUtils";
+import { deleteUser, updateUser } from "../assets/requestUtils";
+import { redirect } from "react-router-dom";
+import { useAuth } from "../AuthProvider";
 
 const domain = "https://localhost:8443"
 const version = "/v1"
@@ -10,10 +12,16 @@ export default function Profile() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const { logout } = useAuth();
 
     const [formData, setFormData] = useState({ email: '', password: '', name: '' });
     const [errorMessage, setErrorMessage] = useState('');
+
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
 
     const handleChange = (event: any) => {
         const { name, value } = event.target;
@@ -100,7 +108,12 @@ export default function Profile() {
 
     const deleteProfile = async (event: any) => {
         event.preventDefault();
+
+        let result: any = await deleteUser(token);
+
+        console.log(result);
         console.log("Delete");
+        handleLogout();
     }
     return (
         <div className="h-full my-3">
