@@ -1,23 +1,26 @@
 // import auth from '../assets/auth'
 // import Dashboard from './Dashboard';
+import { getUserScanList } from '../assets/requestUtils';
 import { useAuth } from '../AuthProvider';
+import auth from '../assets/auth';
+import { useEffect, useState } from 'react';
 // import { redirect, useNavigate } from 'react-router-dom';
 // import Login from './Login';
 // import { useState, useEffect } from 'react';
 
 export default function Dashboard() {
-    // const navigate = useNavigate();
+    //const navigate = useNavigate();
     const { loggedIn } = useAuth();
-    // const [userId, setUserId] = useState<string | null>(null);
+    const userToken = auth.getId();
+    const [scanList, setScanList] = useState();
 
-    // useEffect(() => {
-    //     if (loggedIn) {
-    //         const id = auth.getId(); // Get the user ID from the token
-    //         setUserId(id); // Set userId state
-    //     } else {
-    //         setUserId(null); // Reset userId if not logged in
-    //     }
-    // }, [loggedIn]);
+    console.log(scanList);
+
+    useEffect(() => {
+
+        const userScanList = getUserScanList(userToken);
+        setScanList(userScanList);
+    }, []);
 
     return (
         // <>
