@@ -8,6 +8,9 @@ import { useEffect, useState } from 'react';
 // import Login from './Login';
 // import { useState, useEffect } from 'react';
 
+const domain = "https://localhost:8443"
+const version = "/v1"
+
 export default function Dashboard() {
     //const navigate = useNavigate();
     const { loggedIn } = useAuth();
@@ -16,10 +19,31 @@ export default function Dashboard() {
 
     console.log(scanList);
 
-    useEffect(() => {
+    const fetchData = async () => {
 
-        const userScanList = getUserScanList(userToken);
-        setScanList(userScanList);
+        const url = `${domain}${version}/user_scans`
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${userToken}`
+                },
+            });
+
+
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
+
+            const result = await response.json()
+            setScanList(result)
+        } catch (error: any) {
+            throw error;
+        }
+    }
+    useEffect(() => {
+        fetchData();
     }, []);
 
     return (
