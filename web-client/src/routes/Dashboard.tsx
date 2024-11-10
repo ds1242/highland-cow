@@ -14,11 +14,10 @@ const version = "/v1"
 export default function Dashboard() {
     //const navigate = useNavigate();
     const { loggedIn } = useAuth();
-    const userToken = auth.getId();
+    const userToken = auth.getToken();
     const [scanList, setScanList] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
 
     const fetchData = async () => {
         setLoading(true)
@@ -63,9 +62,8 @@ export default function Dashboard() {
     }
 
     return (
-        // <>
-        // {!loggedIn ? redirect(`/login`) : ""}
-        <h1>logged in dashboard</h1>
-        // </>
+        <>
+            <h1>logged in dashboard</h1>
+        </>
     )
 }
