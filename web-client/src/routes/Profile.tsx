@@ -63,11 +63,9 @@ export default function Profile() {
     }
 
     useEffect(() => {
-        //        if (tokenUserId != paramUserId) {
-        //            navigate(`dashboard/${tokenUserId}`);
-        //        }
-        console.log("token id" + tokenUserId);
-        console.log("params id" + userId);
+        if (tokenUserId != userId) {
+            navigate(`dashboard/${tokenUserId}`);
+        }
         fetchData();
     }, []);
 
