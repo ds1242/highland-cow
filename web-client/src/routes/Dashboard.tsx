@@ -13,7 +13,6 @@ const version = "/v1"
 
 export default function Dashboard() {
     //const navigate = useNavigate();
-    const { loggedIn } = useAuth();
     const userToken = auth.getToken();
     const [scanList, setScanList] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -47,6 +46,9 @@ export default function Dashboard() {
         }
     }
     useEffect(() => {
+        if (tokenUserId != userId) {
+            navigate(`dashboard/${tokenUserId}`);
+        }
         fetchData();
     }, []);
 
