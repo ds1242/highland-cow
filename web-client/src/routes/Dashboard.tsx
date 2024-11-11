@@ -18,7 +18,7 @@ export default function Dashboard() {
 
 
     const userToken = auth.getToken();
-    const [scanList, setScanList] = useState(null);
+    const [scanList, setScanList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -39,9 +39,11 @@ export default function Dashboard() {
 
             const result = await response.json()
             if (result == null) {
-                setScanList("No Products Scanned Yet");
+                setScanList([]);
+                // return "No products scanned yet";
             } else {
                 setScanList(result)
+                // return result;
             }
         } catch (error: any) {
             setError(error)
@@ -86,18 +88,22 @@ export default function Dashboard() {
                         </tr>
                     </thead>
                     <tbody>
-                        {scanList?.map(product => {
-                            return (
-                                <tr key={product.scan_id}>
-                                    <td>{product.brand}</td>
-                                    <td>{product.product_name}</td>
-                                    <td>{product.description}</td>
-                                    <td>{product.quantity}</td>
-                                    <td>{product.updated_date}</td>
 
-                                </tr>
+                        {
+                            scanList.length ? (
+                                scanList.map(product => (
+                                    <tr key={product.scan_id}>
+                                        <td>{product.brand}</td>
+                                        <td>{product.product_name}</td>
+                                        <td>{product.description}</td>
+                                        <td>{product.quantity}</td>
+                                        <td>{product.updated_date}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr><td colSpan="5">No products</td></tr> // Adjust colSpan based on your table structure
                             )
-                        })}
+                        }
                     </tbody>
 
                 </table>
