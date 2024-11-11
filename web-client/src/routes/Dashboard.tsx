@@ -35,7 +35,11 @@ export default function Dashboard() {
             }
 
             const result = await response.json()
-            setScanList(result)
+            if (result == null) {
+                setScanList("No Products Scanned Yet");
+            } else {
+                setScanList(result)
+            }
         } catch (error: any) {
             setError(error)
         } finally {
