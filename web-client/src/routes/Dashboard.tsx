@@ -74,15 +74,15 @@ export default function Dashboard() {
 
     return (
         <>
-            <div className=''>
+            <div className='flex justify-center'>
                 <table className='table-auto'>
                     <thead>
-                        <tr>
+                        <tr className='text-center'>
                             <th>Brand</th>
                             <th>Product Name </th>
                             <th>Description </th>
                             <th>Quantity </th>
-                            <th>Last Updated</th>
+                            <th>Last Time Updated</th>
                         </tr>
                     </thead>
                     <tbody>
