@@ -86,7 +86,7 @@ export default function Dashboard() {
                         </tr>
                     </thead>
                     <tbody>
-                        {scanList.map(product => {
+                        {scanList?.map(product => {
                             return (
                                 <tr key={product.scan_id}>
                                     <td>{product.brand}</td>
