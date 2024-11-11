@@ -1,18 +1,22 @@
 // import auth from '../assets/auth'
 // import Dashboard from './Dashboard';
-import { getUserScanList } from '../assets/requestUtils';
-import { useAuth } from '../AuthProvider';
+// import { getUserScanList } from '../assets/requestUtils';
+// import { useAuth } from '../AuthProvider';
 import auth from '../assets/auth';
 import { useEffect, useState } from 'react';
-// import { redirect, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // import Login from './Login';
-// import { useState, useEffect } from 'react';
 
 const domain = "https://localhost:8443"
 const version = "/v1"
 
 export default function Dashboard() {
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
+    const { userId } = useParams();
+    const tokenUserId = auth.getId();
+
+
     const userToken = auth.getToken();
     const [scanList, setScanList] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -45,6 +49,7 @@ export default function Dashboard() {
             setLoading(false)
         }
     }
+
     useEffect(() => {
         if (tokenUserId != userId) {
             navigate(`dashboard/${tokenUserId}`);
