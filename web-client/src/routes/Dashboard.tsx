@@ -74,7 +74,35 @@ export default function Dashboard() {
 
     return (
         <>
-            <h1>logged in dashboard</h1>
+            <div className=''>
+                <table className='table-auto'>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Product Name </th>
+                            <th>Description </th>
+                            <th>Quantity </th>
+                            <th>Last Updated</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {scanList.map(product => {
+                            return (
+                                <tr key={product.scan_id}>
+                                    <td>{product.brand}</td>
+                                    <td>{product.product_name}</td>
+                                    <td>{product.description}</td>
+                                    <td>{product.quantity}</td>
+                                    <td>{product.updated_date}</td>
+
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+
+                </table>
+
+            </div>
         </>
     )
 }
