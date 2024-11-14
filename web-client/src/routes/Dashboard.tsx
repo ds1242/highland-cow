@@ -77,14 +77,14 @@ export default function Dashboard() {
     return (
         <>
             <div className='flex justify-center'>
-                <table className='table-auto'>
+                <table className='table-auto border-collapse border border-slate-500'>
                     <thead>
                         <tr className='text-center'>
-                            <th>Brand</th>
-                            <th>Product Name </th>
-                            <th>Description </th>
-                            <th>Quantity </th>
-                            <th>Last Time Updated</th>
+                            <th className='border border-slate-700'>Brand</th>
+                            <th className='border border-slate-700'>Product Name </th>
+                            <th className='border border-slate-700'>Description </th>
+                            <th className='border border-slate-700'>Quantity </th>
+                            <th className='border border-slate-700'>Last Time Updated</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,11 +93,11 @@ export default function Dashboard() {
                             scanList.length ? (
                                 scanList.map(product => (
                                     <tr key={product.scan_id}>
-                                        <td>{product.brand}</td>
-                                        <td>{product.product_name}</td>
-                                        <td>{product.description}</td>
-                                        <td>{product.quantity}</td>
-                                        <td>{product.updated_date}</td>
+                                        <td className='border border-slate-600 bg-slate-200 '>{product.brand}</td>
+                                        <td className='border border-slate-600 bg-slate-200 '>{product.product_name}</td>
+                                        <td className='border border-slate-600 bg-slate-200 '>{product.description}</td>
+                                        <td className='border border-slate-600 bg-slate-200 '>{product.quantity}</td>
+                                        <td className='border border-slate-600 bg-slate-200 '>{product.updated_at}</td>
                                     </tr>
                                 ))
                             ) : (
