@@ -123,3 +123,29 @@ export async function deleteUser(token: string) {
     const result = await response.json()
     return result
 }
+
+export async function getUserScanList(token: string) {
+    const url = `${domain}${version}/user_scans`
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        });
+
+
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+
+        const result = await response.json()
+        return result;
+
+    } catch (error: any) {
+        throw error;
+    }
+
+
+}
