@@ -75,40 +75,37 @@ export default function Dashboard() {
     }
 
     return (
-        <>
-            <div className='flex justify-center'>
-                <table className='table-auto border-collapse border border-slate-500'>
-                    <thead>
-                        <tr className='text-center'>
-                            <th className='border border-slate-700'>Brand</th>
-                            <th className='border border-slate-700'>Product Name </th>
-                            <th className='border border-slate-700'>Description </th>
-                            <th className='border border-slate-700'>Quantity </th>
-                            <th className='border border-slate-700'>Last Time Updated</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+        <div className='grid grid-cols-6 max-w-fit'>
+            {/* <div className='flex justify-center'> */}
+                {/* <div className=' border border-slate-500'> */}
+                    <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Brand</p></div>
+                    <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Product Name </p></div>
+                    <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Description </p></div>
+                    <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Quantity </p></div>
+                    <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Last Time Updated</p></div>
+                    <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Add/Remove</p></div>
+                {/* </div> */}
+            {/* </div> */}
 
-                        {
-                            scanList.length ? (
-                                scanList.map(product => (
-                                    <tr key={product.scan_id}>
-                                        <td className='border border-slate-600 bg-slate-200 '>{product.brand}</td>
-                                        <td className='border border-slate-600 bg-slate-200 '>{product.product_name}</td>
-                                        <td className='border border-slate-600 bg-slate-200 '>{product.description}</td>
-                                        <td className='border border-slate-600 bg-slate-200 '>{product.quantity}</td>
-                                        <td className='border border-slate-600 bg-slate-200 '>{product.updated_at}</td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr><td colSpan="5">No products</td></tr> // Adjust colSpan based on your table structure
-                            )
-                        }
-                    </tbody>
+                {
+                    scanList.length ? (
+                        scanList.map(product => (
+                            // <div  className='grid grid-cols-6 justify-center'>
+                            <>
+                                <div key={product.scan_id} className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.brand}</div>
+                                <div key={product.scan_id} className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.product_name}</div>
+                                <div key={product.scan_id} className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.description}</div>
+                                <div key={product.scan_id} className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.quantity}</div>
+                                <div key={product.scan_id} className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.updated_at}</div>
+                                <div key={product.scan_id} className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly'><button>+</button> <button>-</button></div>
+                            </>
+                            // </div>
+                        ))
+                    ) : (
+                        <div>No products</div>
+                    )
+                }
 
-                </table>
-
-            </div>
-        </>
+        </div>
     )
 }

@@ -8,7 +8,7 @@ import { useAuth } from "../AuthProvider";
 function SignUp() {
 
     const navigate = useNavigate();
-    const {login } = useAuth();
+    const { login } = useAuth();
     const [formData, setFormData] = useState({ name: '', email: '', password: '' });
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -31,20 +31,22 @@ function SignUp() {
             }
             setFormData({
                 name: '',
-                email: '', 
+                email: '',
                 password: '',
             });
             setErrorMessage('');
-            
+
             login(result.token)
             navigate(`/dashboard/${result.user_id}`)
 
-        } catch (error:any) {
+        } catch (error: any) {
             if (error.message == 'Response status: 500') {
                 setErrorMessage("User already exists")
             }
         }
     }
+
+
 
     return (
         <div className="bg-neutral-two h-full content-start py-3 lg:py-0">
