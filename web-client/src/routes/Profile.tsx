@@ -120,7 +120,7 @@ export default function Profile() {
         handleLogout();
     }
     return (
-        <div className="h-full my-3">
+        <div className="h-full my-3 py-3">
             <div className="bg-neutral-two content-start py-3 lg:py-0">
                 <h1 className="flex justify-center text-4xl text-brand py-2">Welcome {data?.name}!</h1>
                 <p className="flex justify-center text-center text-brand py-1 px-1">If you would like to update any of your information please use the fields below</p>

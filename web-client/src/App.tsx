@@ -8,7 +8,7 @@ function App() {
   
 
   return (
-    <main className='bg-neutral-two h-lvh grid grid-flow-row'>
+    <main className='bg-neutral-two'>
       <Header />
         <Outlet />
       <Footer />

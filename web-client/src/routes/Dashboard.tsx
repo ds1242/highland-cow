@@ -75,30 +75,32 @@ export default function Dashboard() {
     }
 
     return (
-        <div className='grid grid-cols-6 max-w-fit'>
-            {/* <div className='flex justify-center'> */}
-                {/* <div className=' border border-slate-500'> */}
+        <div className='h-full py-3 my-3 flex justify-center'>
+
+            <div className=''>
+                {/* <div className='flex justify-center'> */}
+                <div className=' flex flex-row flex-wrap'>
                     <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Brand</p></div>
                     <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Product Name </p></div>
                     <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Description </p></div>
                     <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Quantity </p></div>
                     <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Last Time Updated</p></div>
                     <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Add/Remove</p></div>
+                </div>
                 {/* </div> */}
-            {/* </div> */}
 
                 {
                     scanList.length ? (
                         scanList.map(product => (
                             // <div  className='grid grid-cols-6 justify-center'>
-                            <>
-                                <div key={product.scan_id} className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.brand}</div>
-                                <div key={product.scan_id} className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.product_name}</div>
-                                <div key={product.scan_id} className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.description}</div>
-                                <div key={product.scan_id} className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.quantity}</div>
-                                <div key={product.scan_id} className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.updated_at}</div>
-                                <div key={product.scan_id} className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly'><button>+</button> <button>-</button></div>
-                            </>
+                            <div className='flex flex-row' key={product.scan_id}>
+                                <div className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.brand}</div>
+                                <div className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.product_name}</div>
+                                <div className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.description}</div>
+                                <div className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.quantity}</div>
+                                <div className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.updated_at}</div>
+                                <div className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly'><button>+</button> <button>-</button></div>
+                            </div>
                             // </div>
                         ))
                     ) : (
@@ -106,6 +108,7 @@ export default function Dashboard() {
                     )
                 }
 
+            </div>
         </div>
     )
 }
