@@ -5,12 +5,14 @@ import { Outlet } from 'react-router-dom'
 
 function App() {
 
-  
+
 
   return (
-    <main className='bg-neutral-two h-lvh grid grid-flow-row'>
+    <main className='bg-neutral-two'>
       <Header />
+      <div className='min-h-96'>
         <Outlet />
+      </div>
       <Footer />
     </main>
   )

@@ -146,6 +146,52 @@ export async function getUserScanList(token: string) {
     } catch (error: any) {
         throw error;
     }
+}
 
+
+export async function updateScanQuantity(scan_id: string, quantity: number, token: string): Promise<Boolean> {
+    const url = `${domain}${version}/scan_product`
+    try {
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": 'application/json',
+            },
+            body: JSON.stringify({
+                scan_id: scan_id,
+                quantity: quantity,
+            })
+
+        })
+        if(!response.ok) {
+            throw new Error(`Response status: ${response.status}`)
+        }
+        return true;
+    } catch (error:any) {
+        throw error;
+    }
+}
+
+export async function deleteScan(scan_id: string, token:string) {
+    const url = `${domain}/${version}/scan_product`
+    try {
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                scan_id: scan_id,
+            })
+        })
+        if(!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+        
+    } catch (error:any) {
+        throw error;
+    }
 
 }
