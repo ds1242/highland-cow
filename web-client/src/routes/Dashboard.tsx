@@ -75,40 +75,40 @@ export default function Dashboard() {
     }
 
     return (
-        <div className='h-full py-3 my-3 flex justify-center'>
+        <div className='py-5 my-5 flex justify-center h-full'>
 
-            <div className=''>
-                {/* <div className='flex justify-center'> */}
-                <div className=' flex flex-row flex-wrap'>
-                    <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Brand</p></div>
-                    <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Product Name </p></div>
-                    <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Description </p></div>
-                    <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Quantity </p></div>
-                    <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Last Time Updated</p></div>
-                    <div className='border border-slate-700 flex text-center align-middle justify-center'><p>Add/Remove</p></div>
-                </div>
-                {/* </div> */}
+            <table className='border border-collapse'>
+                <thead className=''>
+                    <tr className=''>
+                        <th className='border border-slate-700 '><p>Brand</p></th>
+                        <th className='border border-slate-700 '><p>Product Name </p></th>
+                        <th className='border border-slate-700 '><p>Description </p></th>
+                        <th className='border border-slate-700 '><p>Quantity </p></th>
+                        <th className='border border-slate-700 '><p>Last Time Updated</p></th>
+                        <th className='border border-slate-700 '><p>Add/Remove</p></th>
+                    </tr>
+                </thead>
 
                 {
                     scanList.length ? (
                         scanList.map(product => (
-                            // <div  className='grid grid-cols-6 justify-center'>
-                            <div className='flex flex-row' key={product.scan_id}>
-                                <div className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.brand}</div>
-                                <div className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.product_name}</div>
-                                <div className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.description}</div>
-                                <div className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.quantity}</div>
-                                <div className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly '>{product.updated_at}</div>
-                                <div className='border border-slate-600 bg-slate-200 flex align-middle justify-evenly'><button>+</button> <button>-</button></div>
-                            </div>
-                            // </div>
+                            <tbody className=''>
+                                <tr className='' key={product.scan_id}>
+                                    <td className='border border-slate-600 bg-slate-200 '>{product.brand}</td>
+                                    <td className='border border-slate-600 bg-slate-200 '>{product.product_name}</td>
+                                    <td className='border border-slate-600 bg-slate-200 '>{product.description}</td>
+                                    <td className='border border-slate-600 bg-slate-200 '>{product.quantity}</td>
+                                    <td className='border border-slate-600 bg-slate-200 '>{product.updated_at}</td>
+                                    <td className='border border-slate-600 bg-slate-200'><button>+</button> <button>-</button></td>
+                                </tr>
+                            </tbody>
                         ))
                     ) : (
                         <div>No products</div>
                     )
                 }
 
-            </div>
+            </table>
         </div>
     )
 }
