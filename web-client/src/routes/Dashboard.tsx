@@ -73,18 +73,29 @@ export default function Dashboard() {
 
     const addOnClick = async (e:any, scan_id:string, quantity: number) => {
         e.preventDefault();
-        console.log('click ' + scan_id + ' ' + quantity)
         let newQuantity = quantity + 1;
         let quantityUpdate = await updateScanQuantity(scan_id, newQuantity, userToken);
         if (quantityUpdate == true) {
             fetchData();
-        };
+        } else {
+            setError(error.message("Error updating quantity"))
+        }
 
     }
 
-    const subtractOnClick = (e: any, scan_id:string, quantity: number) => {
+    const subtractOnClick = async (e: any, scan_id:string, quantity: number) => {
         e.preventDefault();
         console.log('subtract ' + scan_id + ' ' + quantity);
+        let newQuantity = quantity - 1;
+        if (newQuantity <= 0) {
+            console.log('add delete product function');
+        }
+        let quantityUpdate = await updateScanQuantity(scan_id, newQuantity, userToken);
+        if (quantityUpdate == true) {
+            fetchData();
+        } else {
+            setError(error.message("Error Updating Quantity"))
+        }
     }
 
     return (
@@ -136,6 +147,7 @@ export default function Dashboard() {
 
                 </table>
             </div>
+            {error && <div className="flex flex-row justify-center pb-3 text-red-500 italic"> {error} </div>}
         </div>
     )
 }

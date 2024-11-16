@@ -172,3 +172,26 @@ export async function updateScanQuantity(scan_id: string, quantity: number, toke
         throw error;
     }
 }
+
+export async function deleteScan(scan_id: string, token:string) {
+    const url = `${domain}/${version}/scan_product`
+    try {
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer: ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                scan_id: scan_id,
+            })
+        })
+        if(!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+        
+    } catch (error:any) {
+        throw error;
+    }
+
+}
