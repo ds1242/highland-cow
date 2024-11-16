@@ -1,4 +1,4 @@
-import { updateScanQuantity } from '../assets/requestUtils';
+import { updateScanQuantity, deleteScan } from '../assets/requestUtils';
 import auth from '../assets/auth';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -88,13 +88,15 @@ export default function Dashboard() {
         console.log('subtract ' + scan_id + ' ' + quantity);
         let newQuantity = quantity - 1;
         if (newQuantity <= 0) {
-            console.log('add delete product function');
-        }
-        let quantityUpdate = await updateScanQuantity(scan_id, newQuantity, userToken);
-        if (quantityUpdate == true) {
+            await deleteScan(scan_id, userToken);
             fetchData();
         } else {
-            setError(error.message("Error Updating Quantity"))
+            let quantityUpdate = await updateScanQuantity(scan_id, newQuantity, userToken);
+            if (quantityUpdate == true) {
+                fetchData();
+            } else {
+                setError(error.message("Error Updating Quantity"))
+            }
         }
     }
 

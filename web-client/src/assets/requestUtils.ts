@@ -179,7 +179,7 @@ export async function deleteScan(scan_id: string, token:string) {
         const response = await fetch(url, {
             method: 'DELETE',
             headers: {
-                Authorization: `Bearer: ${token}`,
+                Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
