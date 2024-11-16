@@ -74,6 +74,16 @@ export default function Dashboard() {
         )
     }
 
+    const addOnClick = (e:any) => {
+        e.preventDefault();
+        console.log('click')
+    }
+
+    const subtractOnClick = (e:any) => {
+        e.preventDefault();
+        console.log('subtract');
+    }
+
     return (
         <div className='py-5 my-5 flex justify-center h-full'>
 
@@ -89,24 +99,35 @@ export default function Dashboard() {
                     </tr>
                 </thead>
 
+                <tbody className=''>
                 {
                     scanList.length ? (
                         scanList.map(product => (
-                            <tbody className=''>
                                 <tr className='' key={product.scan_id}>
-                                    <td className='border border-slate-600 bg-slate-200 '>{product.brand}</td>
-                                    <td className='border border-slate-600 bg-slate-200 '>{product.product_name}</td>
-                                    <td className='border border-slate-600 bg-slate-200 '>{product.description}</td>
-                                    <td className='border border-slate-600 bg-slate-200 '>{product.quantity}</td>
-                                    <td className='border border-slate-600 bg-slate-200 '>{product.updated_at}</td>
-                                    <td className='border border-slate-600 bg-slate-200'><button>+</button> <button>-</button></td>
+                                    <td className='border border-slate-600 bg-slate-200 px-3 text-center '>{product.brand}</td>
+                                    <td className='border border-slate-600 bg-slate-200 px-3 text-center '>{product.product_name}</td>
+                                    <td className='border border-slate-600 bg-slate-200 px-3 text-center '>{product.description}</td>
+                                    <td className='border border-slate-600 bg-slate-200 px-3 text-center '>{product.quantity}</td>
+                                    <td className='border border-slate-600 bg-slate-200 px-3 text-center '>{product.updated_at}</td>
+                                    <td className='border border-slate-600 bg-slate-200 px-3 text-center'>
+                                        <button className='px-2 mx-2' onClick={addOnClick}>
+                                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2Zm0 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 0 1.5h-3.5v3.5a.75.75 0 0 1-1.5 0v-3.5h-3.5a.75.75 0 0 1 0-1.5h3.5v-3.5A.75.75 0 0 1 12 7Z" fill="#222F3D" />
+                                            </svg>
+                                        </button>
+                                        <button className='px-2 mx-2' onClick={subtractOnClick}>
+                                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2Zm0 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17Zm4.25 7.75a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5h8.5Z" fill="#222F3D" />
+                                            </svg>
+                                        </button>
+                                    </td>
                                 </tr>
-                            </tbody>
                         ))
                     ) : (
                         <div>No products</div>
                     )
                 }
+                </tbody>
 
             </table>
         </div>
