@@ -3,6 +3,16 @@ import auth from '../assets/auth';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+  } from "@/components/ui/table"
+  
 // import Login from './Login';
 
 const domain = "https://localhost:8443"
@@ -53,6 +63,9 @@ export default function Dashboard() {
         if (tokenUserId != userId) {
             navigate(`dashboard/${tokenUserId}`);
         }
+        if (userId === null) {
+            navigate(`/login`)
+        }
         fetchData();
     }, []);
 
@@ -73,8 +86,9 @@ export default function Dashboard() {
 
     const addOnClick = async (e:any, scan_id:string, quantity: number) => {
         e.preventDefault();
+        let token:string = auth.getToken();
         let newQuantity = quantity + 1;
-        let quantityUpdate = await updateScanQuantity(scan_id, newQuantity, userToken);
+        let quantityUpdate = await updateScanQuantity(scan_id, newQuantity, token);
         if (quantityUpdate == true) {
             fetchData();
         } else {
@@ -85,13 +99,14 @@ export default function Dashboard() {
 
     const subtractOnClick = async (e: any, scan_id:string, quantity: number) => {
         e.preventDefault();
+        let token:string = auth.getToken();
         console.log('subtract ' + scan_id + ' ' + quantity);
         let newQuantity = quantity - 1;
         if (newQuantity <= 0) {
-            await deleteScan(scan_id, userToken);
+            await deleteScan(scan_id, token);
             fetchData();
         } else {
-            let quantityUpdate = await updateScanQuantity(scan_id, newQuantity, userToken);
+            let quantityUpdate = await updateScanQuantity(scan_id, newQuantity, token);
             if (quantityUpdate == true) {
                 fetchData();
             } else {
@@ -101,33 +116,32 @@ export default function Dashboard() {
     }
 
     return (
-        <div className='flex justify-center py-5 my-5 h-full'>
-
+        <div className=' flex justify-center py-5 my-5 h-full'>
             <div className='overflow-x-auto'>
+                <Table className=''>
+                    <TableCaption>List of your scanned items</TableCaption>
+                    <TableHeader className='bg-slate-50 rounded-t-lg'>
+                        <TableRow className=''>
+                            <TableHead className=''><p>Brand</p></TableHead>
+                            <TableHead className=''><p>Product Name </p></TableHead>
+                            <TableHead className=''><p>Description </p></TableHead>
+                            <TableHead className=''><p>Quantity </p></TableHead>
+                            <TableHead className=''><p>Last Time Updated</p></TableHead>
+                            <TableHead className=''><p>Add/Remove</p></TableHead>
+                        </TableRow>
+                    </TableHeader>
 
-                <table className='table-auto border border-collapse'>
-                    <thead className=''>
-                        <tr className='h-14'>
-                            <th className='border border-slate-700 bg-slate-400 px-4'><p>Brand</p></th>
-                            <th className='border border-slate-700 bg-slate-400 px-4'><p>Product Name </p></th>
-                            <th className='border border-slate-700 bg-slate-400 px-4'><p>Description </p></th>
-                            <th className='border border-slate-700 bg-slate-400 px-4'><p>Quantity </p></th>
-                            <th className='border border-slate-700 bg-slate-400 px-4'><p>Last Time Updated</p></th>
-                            <th className='border border-slate-700 bg-slate-400 px-4'><p>Add/Remove</p></th>
-                        </tr>
-                    </thead>
-
-                    <tbody className=''>
+                    <TableBody className=''>
                         {
                             scanList.length ? (
                                 scanList.map(product => (
-                                    <tr className='h-14' key={product.scan_id}>
-                                        <td className='border border-slate-600 bg-slate-200  text-center px-4 '>{product.brand}</td>
-                                        <td className='border border-slate-600 bg-slate-200  text-center px-4 '>{product.product_name}</td>
-                                        <td className='border border-slate-600 bg-slate-200  text-center px-4 '>{product.description}</td>
-                                        <td className='border border-slate-600 bg-slate-200  text-center px-4 '>{product.quantity}</td>
-                                        <td className='border border-slate-600 bg-slate-200  text-center px-4 '>{product.updated_at}</td>
-                                        <td className='border border-slate-600 bg-slate-200  text-center px-4'>
+                                    <TableRow className='h-14' key={product.scan_id}>
+                                        <TableCell className=''>{product.brand}</TableCell>
+                                        <TableCell className=''>{product.product_name}</TableCell>
+                                        <TableCell className=''>{product.description}</TableCell>
+                                        <TableCell className=''>{product.quantity}</TableCell>
+                                        <TableCell className=''>{product.updated_at}</TableCell>
+                                        <TableCell className=''>
                                             <button className='px-2 transition ease-out hover:ease-in hover:scale-110 duration-150' onClick={(event) => addOnClick(event, product.scan_id, product.quantity)}>
                                                 <svg width="24" height="24" className='fill-[#222F3D] hover:fill-red-400' viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2Zm0 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 0 1.5h-3.5v3.5a.75.75 0 0 1-1.5 0v-3.5h-3.5a.75.75 0 0 1 0-1.5h3.5v-3.5A.75.75 0 0 1 12 7Z"/>
@@ -138,16 +152,16 @@ export default function Dashboard() {
                                                     <path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2Zm0 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17Zm4.25 7.75a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5h8.5Z" />
                                                 </svg>
                                             </button>
-                                        </td>
-                                    </tr>
+                                        </TableCell>
+                                    </TableRow>
                                 ))
                             ) : (
                                 <div>No products</div>
                             )
                         }
-                    </tbody>
+                    </TableBody>
 
-                </table>
+                </Table>
             </div>
             {error && <div className="flex flex-row justify-center pb-3 text-red-500 italic"> {error} </div>}
         </div>
