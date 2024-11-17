@@ -120,7 +120,7 @@ export default function Dashboard() {
             <div className='overflow-x-auto'>
                 <Table className=''>
                     <TableCaption>List of your scanned items</TableCaption>
-                    <TableHeader className=''>
+                    <TableHeader className='bg-slate-50 rounded-t-lg'>
                         <TableRow className=''>
                             <TableHead className=''><p>Brand</p></TableHead>
                             <TableHead className=''><p>Product Name </p></TableHead>
@@ -136,12 +136,12 @@ export default function Dashboard() {
                             scanList.length ? (
                                 scanList.map(product => (
                                     <TableRow className='h-14' key={product.scan_id}>
-                                        <TableCell className='   '>{product.brand}</TableCell>
-                                        <TableCell className='   '>{product.product_name}</TableCell>
-                                        <TableCell className='   '>{product.description}</TableCell>
-                                        <TableCell className='   '>{product.quantity}</TableCell>
-                                        <TableCell className='   '>{product.updated_at}</TableCell>
-                                        <TableCell className='  '>
+                                        <TableCell className=''>{product.brand}</TableCell>
+                                        <TableCell className=''>{product.product_name}</TableCell>
+                                        <TableCell className=''>{product.description}</TableCell>
+                                        <TableCell className=''>{product.quantity}</TableCell>
+                                        <TableCell className=''>{product.updated_at}</TableCell>
+                                        <TableCell className=''>
                                             <button className='px-2 transition ease-out hover:ease-in hover:scale-110 duration-150' onClick={(event) => addOnClick(event, product.scan_id, product.quantity)}>
                                                 <svg width="24" height="24" className='fill-[#222F3D] hover:fill-red-400' viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2Zm0 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17ZM12 7a.75.75 0 0 1 .75.75v3.5h3.5a.75.75 0 0 1 0 1.5h-3.5v3.5a.75.75 0 0 1-1.5 0v-3.5h-3.5a.75.75 0 0 1 0-1.5h3.5v-3.5A.75.75 0 0 1 12 7Z"/>
