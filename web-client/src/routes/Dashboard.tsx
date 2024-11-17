@@ -117,9 +117,7 @@ export default function Dashboard() {
 
     return (
         <div className=' flex justify-center py-5 my-5 h-full'>
-
             <div className='overflow-x-auto'>
-
                 <Table className=''>
                     <TableCaption>List of your scanned items</TableCaption>
                     <TableHeader className=''>
