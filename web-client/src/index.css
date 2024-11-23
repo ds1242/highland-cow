@@ -25,12 +25,6 @@
   fill: #fffaff;
 }
 
-.wave-svg {
-  background-image: url('../src/images/header-wave.svg');
-  background-size: auto;
-  background-repeat: no-repeat;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
