@@ -8,11 +8,9 @@ function App() {
 
 
   return (
-    <main className='bg-neutral-two'>
+    <main className='bg-neutral-two flex flex-col min-h-screen'>
       <Header />
-      <div className='min-h-96'>
         <Outlet />
-      </div>
       <Footer />
     </main>
   )
