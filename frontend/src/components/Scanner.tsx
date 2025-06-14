@@ -45,7 +45,6 @@ const Scanner: React.FC = () => {
             } else if (err.name === 'NotFoundError') {
                 setError('No camera found on this device.');
             } else if (err.name === 'NotFoundException') {
-                // No barcode found, try again
                 if (isActive) {
                     setTimeout(startScanning, 1000);
                 }
@@ -95,9 +94,6 @@ const Scanner: React.FC = () => {
 
     return (
         <div className="max-w-md mx-auto p-4">
-            <h1 className="text-2xl font-bold text-center mb-6">
-                Wine & Liquor Scanner
-            </h1>
             
             <div className="relative bg-black rounded-lg overflow-hidden mb-4">
                 <video
@@ -161,7 +157,6 @@ const Scanner: React.FC = () => {
 
             <div className="text-center mt-4 text-sm text-gray-600">
                 <div>Supports UPC, EAN, and Code 128 barcodes</div>
-                <div>Perfect for wine and liquor bottles</div>
             </div>
         </div>
     );
