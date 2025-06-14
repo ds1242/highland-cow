@@ -1,10 +1,12 @@
 // BarcodeScanner.tsx
 import React, { useEffect, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router';
 import Quagga from '@ericblade/quagga2';
 
 const Scanner: React.FC = () => {
   const scannerRef = useRef<HTMLDivElement>(null);
   const [scannedCode, setScannedCode] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!scannerRef.current) return;
@@ -36,8 +38,7 @@ const Scanner: React.FC = () => {
       const code = data?.codeResult?.code;
       if (code) {
         setScannedCode(code);
-        console.log('Detected code:', code);
-        Quagga.stop(); // Stop after first successful scan
+        Quagga.stop(); 
       }
     };
 
@@ -48,6 +49,12 @@ const Scanner: React.FC = () => {
       Quagga.stop();
     };
   }, []);
+
+  useEffect(() => {
+    if (scannedCode) {
+      navigate(`/results/${scannedCode}`);
+    }
+  }, [scannedCode, navigate]);
 
   return (
     <div style={{ textAlign: 'center' }}>
@@ -61,7 +68,7 @@ const Scanner: React.FC = () => {
         }}
       />
       <div style={{ marginTop: '1rem', fontSize: '1.2em' }}>
-        {scannedCode ? `Scanned Code: ${scannedCode}` : 'Scanning...'}
+        {scannedCode ? `Redirecting to ${scannedCode}...` : 'Scanning...'}
       </div>
     </div>
   );
