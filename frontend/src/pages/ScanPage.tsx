@@ -1,10 +1,13 @@
-import Header from "../components/Header/Header"
+import Header from "../components/Header"
+import Scanner from "../components/Scanner"
 
 export default function ScanPage() {
     return (
         <>
-        <Header />
-        <h1>Scan Page!!</h1>
+            <Header />
+            <div className="flex justify-center">
+                <Scanner />
+            </div>
         </>
     )
 }

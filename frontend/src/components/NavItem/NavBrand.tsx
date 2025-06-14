@@ -1,5 +1,5 @@
 import { Link } from "react-router"
-import brand from "/public/brand_cow.jpg";
+import brand from "/brand_cow.jpg";
 
 export default function NavBrand() {
     
